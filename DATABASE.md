@@ -15,6 +15,8 @@ DB_NAME=cressara
 MONGO_TIMEOUT_MS=5000
 ```
 
+`MONGODB_URI` also works as an alias if your hosting provider uses that name.
+
 ## MongoDB Atlas
 
 1. Crea un proyecto en MongoDB Atlas.

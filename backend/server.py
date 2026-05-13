@@ -34,7 +34,7 @@ def env(name: str, default: Optional[str] = None, *, required: bool = False) -> 
 
 ENVIRONMENT = env("ENVIRONMENT", "development").lower()
 IS_PRODUCTION = ENVIRONMENT == "production"
-MONGO_URL = env("MONGO_URL", required=True)
+MONGO_URL = env("MONGO_URL", env("MONGODB_URI"), required=True)
 DB_NAME = env("DB_NAME", required=True)
 JWT_SECRET = env("JWT_SECRET", required=True)
 CORS_ORIGINS = [o.strip() for o in env("CORS_ORIGINS", "*").split(",") if o.strip()]
