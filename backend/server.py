@@ -107,10 +107,15 @@ async def ensure_database_ready() -> None:
 
 @app.middleware("http")
 async def ensure_db_before_api_requests(request: Request, call_next):
-    if request.url.path.startswith("/api") and not request.url.path.startswith("/api/health"):
+    path = request.url.path.rstrip("/") or "/"
+    health_paths = {"/health", "/health/db", "/api/health", "/api/health/db"}
+    api_paths = ("/auth", "/courses", "/api/auth", "/api/courses")
+    should_prepare_db = path not in health_paths and path.startswith(api_paths)
+
+    if should_prepare_db:
         try:
             await ensure_database_ready()
-        except RuntimeError as exc:
+        except Exception as exc:
             logger.warning("API readiness failed: %s", exc)
             return JSONResponse(status_code=503, content={"detail": str(exc)})
     return await call_next(request)
