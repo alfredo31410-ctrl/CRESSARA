@@ -10,6 +10,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from fastapi import FastAPI, APIRouter, HTTPException, Request, Response, Depends
+from fastapi.responses import JSONResponse
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo.errors import PyMongoError, ServerSelectionTimeoutError
@@ -34,20 +35,34 @@ def env(name: str, default: Optional[str] = None, *, required: bool = False) -> 
 
 ENVIRONMENT = env("ENVIRONMENT", "development").lower()
 IS_PRODUCTION = ENVIRONMENT == "production"
-MONGO_URL = env("MONGO_URL", env("MONGODB_URI"), required=True)
-DB_NAME = env("DB_NAME", required=True)
-JWT_SECRET = env("JWT_SECRET", required=True)
+MONGO_URL = env("MONGO_URL", env("MONGODB_URI"))
+DB_NAME = env("DB_NAME", "cressara")
+JWT_SECRET = env("JWT_SECRET")
 CORS_ORIGINS = [o.strip() for o in env("CORS_ORIGINS", "*").split(",") if o.strip()]
 COOKIE_SECURE = env("COOKIE_SECURE", "true" if IS_PRODUCTION else "false").lower() == "true"
 COOKIE_SAMESITE = env("COOKIE_SAMESITE", "none" if IS_PRODUCTION else "lax").lower()
 MONGO_TIMEOUT_MS = int(env("MONGO_TIMEOUT_MS", "5000"))
 
-if IS_PRODUCTION and CORS_ORIGINS == ["*"]:
-    raise RuntimeError("CORS_ORIGINS cannot be '*' in production. Set your exact frontend URL.")
+
+def config_errors() -> List[str]:
+    errors = []
+    if not MONGO_URL:
+        errors.append("MONGO_URL or MONGODB_URI is required")
+    if not DB_NAME:
+        errors.append("DB_NAME is required")
+    if not JWT_SECRET:
+        errors.append("JWT_SECRET is required")
+    if IS_PRODUCTION and CORS_ORIGINS == ["*"]:
+        errors.append("CORS_ORIGINS cannot be '*' in production")
+    if IS_PRODUCTION and not env("ADMIN_PASSWORD"):
+        errors.append("ADMIN_PASSWORD is required in production")
+    return errors
 
 
 # -------------------- DB --------------------
-client = AsyncIOMotorClient(MONGO_URL, serverSelectionTimeoutMS=MONGO_TIMEOUT_MS)
+# Keep imports healthy even before production variables are configured.
+# Actual API requests validate configuration before using the database.
+client = AsyncIOMotorClient(MONGO_URL or "mongodb://localhost:27017", serverSelectionTimeoutMS=MONGO_TIMEOUT_MS)
 db = client[DB_NAME]
 
 
@@ -78,6 +93,9 @@ async def ensure_database_ready() -> None:
     global db_ready
     if db_ready:
         return
+    errors = config_errors()
+    if errors:
+        raise RuntimeError("; ".join(errors))
     await ping_database()
     await db.users.create_index("email", unique=True)
     await db.courses.create_index("category")
@@ -89,8 +107,12 @@ async def ensure_database_ready() -> None:
 
 @app.middleware("http")
 async def ensure_db_before_api_requests(request: Request, call_next):
-    if request.url.path.startswith("/api"):
-        await ensure_database_ready()
+    if request.url.path.startswith("/api") and not request.url.path.startswith("/api/health"):
+        try:
+            await ensure_database_ready()
+        except RuntimeError as exc:
+            logger.warning("API readiness failed: %s", exc)
+            return JSONResponse(status_code=503, content={"detail": str(exc)})
     return await call_next(request)
 
 
@@ -301,14 +323,24 @@ async def delete_course(course_id: str, current_user: dict = Depends(get_current
 
 @api_router.get("/health")
 async def health():
-    return {"status": "ok", "service": "cresara"}
+    errors = config_errors()
+    return {
+        "status": "ok" if not errors else "misconfigured",
+        "service": "cresara",
+        "environment": ENVIRONMENT,
+        "database": DB_NAME,
+        "config_errors": errors,
+    }
 
 
 @api_router.get("/health/db")
 async def health_db():
     try:
-        await client.admin.command("ping")
+        await ensure_database_ready()
         return {"status": "ok", "service": "cresara", "database": DB_NAME}
+    except RuntimeError as exc:
+        logger.warning("Database readiness check failed: %s", exc)
+        raise HTTPException(status_code=503, detail=str(exc))
     except PyMongoError as exc:
         logger.warning("Database health check failed: %s", exc)
         raise HTTPException(status_code=503, detail="Database unavailable")
@@ -458,7 +490,8 @@ async def seed_courses():
 
 @app.on_event("startup")
 async def on_startup():
-    await ensure_database_ready()
+    if env("STARTUP_DB_CHECK", "false").lower() == "true":
+        await ensure_database_ready()
 
 
 @app.on_event("shutdown")
