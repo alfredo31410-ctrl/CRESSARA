@@ -38,8 +38,8 @@ export default function AdminLogin() {
       data-testid="admin-login-page"
       className="min-h-screen bg-brand-bg flex items-center justify-center px-6 relative overflow-hidden"
     >
-      <div className="absolute -top-40 -left-32 w-[500px] h-[500px] rounded-full bg-brand-purple/15 blur-3xl" />
-      <div className="absolute -bottom-40 -right-32 w-[500px] h-[500px] rounded-full bg-brand-blue/10 blur-3xl" />
+      <div className="absolute -top-40 -left-32 w-[500px] h-[500px] rounded-full bg-brand-pink/15 blur-3xl" />
+      <div className="absolute -bottom-40 -right-32 w-[500px] h-[500px] rounded-full bg-brand-blue/15 blur-3xl" />
 
       <div className="relative w-full max-w-md">
         <Link
@@ -94,7 +94,7 @@ export default function AdminLogin() {
               type="submit"
               disabled={loading}
               data-testid="login-submit-btn"
-              className="w-full rounded-full bg-white text-black hover:bg-brand-pink transition-colors h-11 text-sm font-medium"
+              className="w-full rounded-full bg-brand-blue text-white hover:bg-brand-pink transition-colors h-11 text-sm font-medium"
             >
               {loading ? "Ingresando…" : "Ingresar"}
             </Button>

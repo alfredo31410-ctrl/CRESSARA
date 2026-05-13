@@ -202,7 +202,7 @@ export default function AdminDashboard() {
           <Button
             onClick={openCreate}
             data-testid="create-course-btn"
-            className="rounded-full bg-white text-black hover:bg-brand-pink transition-colors h-11 px-6"
+            className="rounded-full bg-brand-blue text-white hover:bg-brand-pink transition-colors h-11 px-6"
           >
             <Plus size={16} className="mr-2" /> Nuevo curso
           </Button>
@@ -454,7 +454,7 @@ export default function AdminDashboard() {
                 type="submit"
                 disabled={saving}
                 data-testid="form-submit"
-                className="rounded-full bg-white text-black hover:bg-brand-pink transition-colors"
+                className="rounded-full bg-brand-blue text-white hover:bg-brand-pink transition-colors"
               >
                 {saving ? "Guardando…" : editingId ? "Guardar cambios" : "Crear curso"}
               </Button>

@@ -15,7 +15,7 @@ const FOCUS_AREAS = [
       "Apego, autoestima, heridas y dinámicas relacionales. Comprender los patrones que configuran cómo amas y cómo te eliges.",
     image:
       "https://images.unsplash.com/photo-1740801505683-9391efb89106?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHwzfHxsYXRpbiUyMHdvbWFuJTIwcG9ydHJhaXQlMjBkYXJrJTIwbW9vZHxlbnwwfHx8fDE3NzczOTgwMDl8MA&ixlib=rb-4.1.0&q=85",
-    accent: "from-brand-purple/40",
+    accent: "from-brand-pink/45",
   },
   {
     key: "hombres",
@@ -82,8 +82,8 @@ export default function Home() {
             className="w-full h-full object-cover opacity-50"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-brand-bg via-brand-bg/85 to-brand-bg/40" />
-          <div className="absolute -top-40 -left-32 w-[600px] h-[600px] rounded-full bg-brand-purple/20 blur-3xl" />
-          <div className="absolute -bottom-40 -right-32 w-[600px] h-[600px] rounded-full bg-brand-blue/20 blur-3xl" />
+          <div className="absolute -top-40 -left-32 w-[600px] h-[600px] rounded-full bg-brand-pink/18 blur-3xl" />
+          <div className="absolute -bottom-40 -right-32 w-[600px] h-[600px] rounded-full bg-brand-blue/25 blur-3xl" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 pb-24 pt-40 w-full">
@@ -102,7 +102,7 @@ export default function Home() {
               <Link
                 to="/cursos"
                 data-testid="hero-explore-courses-btn"
-                className="group inline-flex items-center gap-2 rounded-full bg-white text-black px-7 py-3.5 text-sm font-medium hover:bg-brand-pink transition-colors duration-300"
+                className="group inline-flex items-center gap-2 rounded-full bg-brand-blue text-white px-7 py-3.5 text-sm font-medium hover:bg-brand-pink transition-colors duration-300 shadow-[0_0_35px_-14px_rgba(37,99,214,0.95)]"
               >
                 Explorar cursos
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
@@ -110,7 +110,7 @@ export default function Home() {
               <Link
                 to="/nosotros"
                 data-testid="hero-about-link"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 text-white px-7 py-3.5 text-sm font-medium hover:bg-white/5 transition-colors"
+                className="inline-flex items-center gap-2 rounded-full border border-brand-pink/40 text-white px-7 py-3.5 text-sm font-medium hover:bg-brand-pink/10 transition-colors"
               >
                 Conocer CRESARA
               </Link>
@@ -278,8 +278,8 @@ export default function Home() {
       {/* FINAL CTA */}
       <section className="max-w-7xl mx-auto px-6 md:px-12 pb-24 md:pb-32">
         <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-brand-surface p-10 md:p-20">
-          <div className="absolute -top-32 -right-32 w-[400px] h-[400px] rounded-full bg-brand-purple/30 blur-3xl" />
-          <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] rounded-full bg-brand-blue/20 blur-3xl" />
+          <div className="absolute -top-32 -right-32 w-[400px] h-[400px] rounded-full bg-brand-pink/25 blur-3xl" />
+          <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] rounded-full bg-brand-blue/25 blur-3xl" />
           <div className="relative max-w-3xl">
             <p className="overline mb-6">Empieza ahora</p>
             <h2 className="font-heading text-4xl md:text-6xl text-white tracking-tighter leading-[0.95] font-medium text-balance">
@@ -291,7 +291,7 @@ export default function Home() {
             <Link
               to="/cursos"
               data-testid="final-cta-btn"
-              className="mt-10 inline-flex items-center gap-2 rounded-full bg-white text-black px-7 py-3.5 text-sm font-medium hover:bg-brand-pink transition-colors group"
+              className="mt-10 inline-flex items-center gap-2 rounded-full bg-brand-blue text-white px-7 py-3.5 text-sm font-medium hover:bg-brand-pink transition-colors group shadow-[0_0_35px_-14px_rgba(37,99,214,0.95)]"
             >
               Explorar cursos
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />

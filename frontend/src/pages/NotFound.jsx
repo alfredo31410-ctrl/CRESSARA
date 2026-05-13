@@ -17,7 +17,7 @@ export default function NotFound() {
       <Link
         to="/"
         data-testid="not-found-home-link"
-        className="mt-10 inline-flex items-center rounded-full bg-white text-black px-6 py-3 text-sm font-medium hover:bg-brand-pink transition-colors"
+        className="mt-10 inline-flex items-center rounded-full bg-brand-blue text-white px-6 py-3 text-sm font-medium hover:bg-brand-pink transition-colors"
       >
         Volver al inicio
       </Link>

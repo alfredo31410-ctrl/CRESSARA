@@ -53,7 +53,7 @@ export default function CursoDetalle() {
             <Link
               to="/cursos"
               data-testid="back-to-courses"
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-white text-black px-6 py-3 text-sm font-medium"
+              className="mt-8 inline-flex items-center gap-2 rounded-full bg-brand-blue text-white px-6 py-3 text-sm font-medium hover:bg-brand-pink transition-colors"
             >
               <ArrowLeft size={16} /> Volver a cursos
             </Link>
@@ -142,7 +142,7 @@ export default function CursoDetalle() {
                   </p>
                   <button
                     data-testid="course-enroll-btn"
-                    className="w-full rounded-full bg-white text-black px-6 py-3 text-sm font-medium hover:bg-brand-pink transition-colors"
+                    className="w-full rounded-full bg-brand-blue text-white px-6 py-3 text-sm font-medium hover:bg-brand-pink transition-colors"
                   >
                     Acceder al curso
                   </button>
