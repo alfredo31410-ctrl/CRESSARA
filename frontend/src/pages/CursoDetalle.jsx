@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, Mail, PlayCircle, Sparkles } from "lucide-react";
+import { ArrowLeft, Bell, Mail, Sparkles } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { api } from "@/lib/api";
@@ -12,16 +12,6 @@ const CATEGORY_LABEL = {
   relaciones: "Relaciones",
 };
 
-function toEmbed(url) {
-  if (!url) return "";
-  // YouTube watch -> embed
-  const ytWatch = url.match(/youtube\.com\/watch\?v=([^&]+)/);
-  if (ytWatch) return `https://www.youtube.com/embed/${ytWatch[1]}`;
-  const ytShort = url.match(/youtu\.be\/([^?]+)/);
-  if (ytShort) return `https://www.youtube.com/embed/${ytShort[1]}`;
-  return url;
-}
-
 export default function CursoDetalle() {
   const { id } = useParams();
   const [course, setCourse] = useState(null);
@@ -30,6 +20,7 @@ export default function CursoDetalle() {
 
   useEffect(() => {
     setLoading(true);
+    setError(null);
     api
       .get(`/courses/${id}`)
       .then((r) => setCourse(r.data))
@@ -60,18 +51,21 @@ export default function CursoDetalle() {
             </Link>
           </div>
         ) : course ? (
-          <>
-            {/* Banner */}
-            <section className="relative h-[55vh] min-h-[420px] overflow-hidden">
+          <section className="relative min-h-[calc(100vh-7rem)] overflow-hidden">
+            <div className="absolute inset-0">
               {course.image_url && (
                 <img
                   src={course.image_url}
                   alt={course.title}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className="absolute inset-0 h-full w-full object-cover"
                 />
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-bg via-brand-bg/80 to-brand-bg/40" />
-              <div className="relative max-w-7xl mx-auto px-6 md:px-12 h-full flex flex-col justify-end pb-12">
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-bg via-brand-bg/90 to-brand-bg/55" />
+              <div className="absolute inset-0 grid-noise opacity-35" />
+            </div>
+
+            <div className="relative max-w-7xl mx-auto px-6 md:px-12 py-14 md:py-24 min-h-[calc(100vh-7rem)] flex items-center">
+              <div className="max-w-4xl">
                 <Link
                   to="/cursos"
                   data-testid="back-link"
@@ -79,7 +73,8 @@ export default function CursoDetalle() {
                 >
                   <ArrowLeft size={16} /> Cursos
                 </Link>
-                <div className="flex flex-wrap items-center gap-3 mb-5">
+
+                <div className="flex flex-wrap items-center gap-3 mb-6">
                   <span className="overline bg-white/5 backdrop-blur px-3 py-1 rounded-full border border-white/10">
                     {CATEGORY_LABEL[course.category]}
                   </span>
@@ -88,66 +83,24 @@ export default function CursoDetalle() {
                       <Sparkles size={11} /> Destacado
                     </span>
                   )}
+                  <span className="overline bg-brand-blue/20 text-white border border-brand-blue/35 px-3 py-1 rounded-full inline-flex items-center gap-1.5">
+                    <Bell size={11} /> Proximamente
+                  </span>
                 </div>
-                <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl text-white tracking-tighter font-bold max-w-4xl leading-[0.95]">
+
+                <p className="overline mb-5">Curso en preparacion</p>
+                <h1 className="font-heading text-5xl md:text-7xl lg:text-[5.5rem] text-white tracking-tighter font-bold leading-[0.92] text-balance">
                   {course.title}
                 </h1>
-              </div>
-            </section>
-
-            {/* Content */}
-            <section className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24 grid md:grid-cols-12 gap-12">
-              <div className="md:col-span-8">
-                <p className="overline mb-4">Sobre este curso</p>
-                <p className="text-xl md:text-2xl text-white leading-relaxed font-light text-balance">
-                  {course.description}
+                <p className="mt-8 text-lg md:text-xl text-brand-muted leading-relaxed max-w-2xl">
+                  La ficha ya esta disponible para que conozcas el enfoque, pero el acceso completo abrira proximamente. Dejanos tu interes y te avisamos cuando este listo.
                 </p>
 
-                {course.video_url && (
-                  <div className="mt-12">
-                    <p className="overline mb-4 inline-flex items-center gap-2">
-                      <PlayCircle size={14} /> Video introductorio
-                    </p>
-                    <div className="aspect-video w-full rounded-xl overflow-hidden border border-white/10 bg-black">
-                      <iframe
-                        data-testid="course-video"
-                        src={toEmbed(course.video_url)}
-                        title={course.title}
-                        className="w-full h-full"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {course.extra_content && (
-                  <div className="mt-12">
-                    <p className="overline mb-4">Contenido adicional</p>
-                    <div className="rounded-xl border border-white/10 bg-brand-surface p-6 md:p-8 text-brand-muted leading-relaxed whitespace-pre-line">
-                      {course.extra_content}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <aside className="md:col-span-4">
-                <div className="sticky top-28 rounded-xl border border-white/10 bg-brand-surface p-7">
-                  <p className="overline mb-3">Acceso</p>
-                  <span className="mb-4 inline-flex w-fit rounded-full border border-brand-pink/30 bg-brand-pink/15 px-3 py-1 text-[0.68rem] font-mono uppercase tracking-[0.2em] text-brand-pink">
-                    Proximamente
-                  </span>
-                  <h3 className="font-heading text-2xl text-white tracking-tight mb-2">
-                    Lista de interes
-                  </h3>
-                  <p className="text-sm text-brand-muted leading-relaxed mb-6">
-                    Próximamente disponible para inscripción. Déjanos tu interés.
-                  </p>
+                <div className="mt-10 flex flex-wrap gap-4">
                   <a
                     href={buildInterestMailto(course.title)}
                     data-testid="course-enroll-btn"
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand-blue text-white px-6 py-3 text-sm font-medium hover:bg-brand-pink transition-colors"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-blue text-white px-7 py-3.5 text-sm font-medium hover:bg-brand-pink transition-colors shadow-[0_0_35px_-14px_rgba(37,99,214,0.95)]"
                   >
                     <Mail size={16} />
                     Avisarme
@@ -157,17 +110,29 @@ export default function CursoDetalle() {
                     target={WHATSAPP_URL ? "_blank" : undefined}
                     rel={WHATSAPP_URL ? "noreferrer" : undefined}
                     data-testid="course-buy-btn"
-                    className="mt-3 inline-flex w-full items-center justify-center rounded-full bg-transparent border border-white/15 text-white px-6 py-3 text-sm font-medium hover:bg-white/5 transition-colors"
+                    className="inline-flex items-center justify-center rounded-full bg-transparent border border-brand-pink/40 text-white px-7 py-3.5 text-sm font-medium hover:bg-brand-pink/10 transition-colors"
                   >
                     Contacto directo
                   </a>
-                  <div className="mt-6 pt-6 border-t border-white/10 text-xs text-brand-subtle font-mono tracking-wider">
-                    CRESARA · {CATEGORY_LABEL[course.category].toUpperCase()}
+                </div>
+
+                <div className="mt-12 grid sm:grid-cols-3 gap-4 max-w-3xl">
+                  <div className="border-l border-brand-pink/40 pl-4">
+                    <p className="text-white text-sm font-medium">Ficha visible</p>
+                    <p className="mt-2 text-sm text-brand-muted">Puedes revisar el enfoque y guardar el curso.</p>
+                  </div>
+                  <div className="border-l border-brand-blue/45 pl-4">
+                    <p className="text-white text-sm font-medium">Apertura pronto</p>
+                    <p className="mt-2 text-sm text-brand-muted">El acceso completo se habilitara cuando el contenido este listo.</p>
+                  </div>
+                  <div className="border-l border-white/15 pl-4">
+                    <p className="text-white text-sm font-medium">Aviso directo</p>
+                    <p className="mt-2 text-sm text-brand-muted">Te contactamos con fechas y siguientes pasos.</p>
                   </div>
                 </div>
-              </aside>
-            </section>
-          </>
+              </div>
+            </div>
+          </section>
         ) : null}
       </div>
 
