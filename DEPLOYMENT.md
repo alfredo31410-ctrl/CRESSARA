@@ -59,7 +59,7 @@ Recomendacion para Vercel:
 6. Agrega `REACT_APP_BACKEND_URL`.
 7. Despliega.
 
-El archivo `vercel.json` de la raiz declara los servicios `frontend` y `backend` para que Vercel pueda importar el monorepo.
+El archivo `vercel.json` de la raiz declara solo el servicio `frontend`. El backend se despliega aparte en un hosting compatible con FastAPI.
 El archivo `frontend/vercel.json` incluye el rewrite necesario para que rutas como `/cursos` y `/nosotros` funcionen al refrescar la pagina.
 El archivo `frontend/.npmrc` fuerza `legacy-peer-deps=true` para que Vercel instale las dependencias igual que en la verificacion local.
 
