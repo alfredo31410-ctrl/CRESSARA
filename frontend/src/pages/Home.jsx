@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, ArrowUpRight, Compass, Heart, Users } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Compass, Heart, Mail, MessageCircle, Users } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CourseCard from "@/components/CourseCard";
 import { api } from "@/lib/api";
+import { buildInterestMailto, CONTACT_EMAIL, WHATSAPP_URL } from "@/lib/contact";
 
 const FOCUS_AREAS = [
   {
@@ -271,6 +272,48 @@ export default function Home() {
                 <p className="text-sm text-brand-muted leading-relaxed">{desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACTO */}
+      <section id="contacto" className="max-w-7xl mx-auto px-6 md:px-12 pb-24 md:pb-32 scroll-mt-28">
+        <div className="grid md:grid-cols-12 gap-10 md:gap-14 items-start border-y border-white/10 py-16">
+          <div className="md:col-span-5">
+            <p className="overline mb-4">Contacto</p>
+            <h2 className="font-heading text-3xl md:text-5xl text-white tracking-tighter font-medium leading-tight">
+              Hablemos antes de que abra el siguiente curso.
+            </h2>
+          </div>
+          <div className="md:col-span-7">
+            <p className="text-lg text-brand-muted leading-relaxed max-w-2xl">
+              Por ahora las inscripciones funcionan por contacto directo. Dejanos tu interes y te respondemos con disponibilidad, fechas y siguientes pasos.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <a
+                href={buildInterestMailto()}
+                data-testid="home-contact-email"
+                className="inline-flex items-center gap-2 rounded-full bg-brand-blue text-white px-6 py-3 text-sm font-medium hover:bg-brand-pink transition-colors"
+              >
+                <Mail size={16} />
+                Escribir correo
+              </a>
+              {WHATSAPP_URL && (
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-testid="home-contact-whatsapp"
+                  className="inline-flex items-center gap-2 rounded-full border border-brand-pink/40 text-white px-6 py-3 text-sm font-medium hover:bg-brand-pink/10 transition-colors"
+                >
+                  <MessageCircle size={16} />
+                  WhatsApp
+                </a>
+              )}
+            </div>
+            <p className="mt-5 text-xs text-brand-subtle font-mono tracking-wider">
+              {CONTACT_EMAIL}
+            </p>
           </div>
         </div>
       </section>

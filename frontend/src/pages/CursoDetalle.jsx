@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, PlayCircle, Sparkles } from "lucide-react";
+import { ArrowLeft, Mail, PlayCircle, Sparkles } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { api } from "@/lib/api";
+import { buildInterestMailto, WHATSAPP_URL } from "@/lib/contact";
 
 const CATEGORY_LABEL = {
   mujeres: "Mujeres",
@@ -134,24 +135,32 @@ export default function CursoDetalle() {
               <aside className="md:col-span-4">
                 <div className="sticky top-28 rounded-xl border border-white/10 bg-brand-surface p-7">
                   <p className="overline mb-3">Acceso</p>
+                  <span className="mb-4 inline-flex w-fit rounded-full border border-brand-pink/30 bg-brand-pink/15 px-3 py-1 text-[0.68rem] font-mono uppercase tracking-[0.2em] text-brand-pink">
+                    Proximamente
+                  </span>
                   <h3 className="font-heading text-2xl text-white tracking-tight mb-2">
-                    Comienza ahora
+                    Lista de interes
                   </h3>
                   <p className="text-sm text-brand-muted leading-relaxed mb-6">
                     Próximamente disponible para inscripción. Déjanos tu interés.
                   </p>
-                  <button
+                  <a
+                    href={buildInterestMailto(course.title)}
                     data-testid="course-enroll-btn"
-                    className="w-full rounded-full bg-brand-blue text-white px-6 py-3 text-sm font-medium hover:bg-brand-pink transition-colors"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand-blue text-white px-6 py-3 text-sm font-medium hover:bg-brand-pink transition-colors"
                   >
-                    Acceder al curso
-                  </button>
-                  <button
+                    <Mail size={16} />
+                    Avisarme
+                  </a>
+                  <a
+                    href={WHATSAPP_URL || buildInterestMailto(course.title)}
+                    target={WHATSAPP_URL ? "_blank" : undefined}
+                    rel={WHATSAPP_URL ? "noreferrer" : undefined}
                     data-testid="course-buy-btn"
-                    className="mt-3 w-full rounded-full bg-transparent border border-white/15 text-white px-6 py-3 text-sm font-medium hover:bg-white/5 transition-colors"
+                    className="mt-3 inline-flex w-full items-center justify-center rounded-full bg-transparent border border-white/15 text-white px-6 py-3 text-sm font-medium hover:bg-white/5 transition-colors"
                   >
-                    Comprar
-                  </button>
+                    Contacto directo
+                  </a>
                   <div className="mt-6 pt-6 border-t border-white/10 text-xs text-brand-subtle font-mono tracking-wider">
                     CRESARA · {CATEGORY_LABEL[course.category].toUpperCase()}
                   </div>

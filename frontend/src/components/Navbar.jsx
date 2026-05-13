@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, ShieldCheck, X } from "lucide-react";
 import BrandLogo from "@/components/BrandLogo";
 
 const links = [
@@ -45,13 +45,23 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <Link
-          to="/cursos"
-          data-testid="navbar-cta"
-          className="hidden md:inline-flex items-center rounded-full bg-brand-blue text-white px-5 py-2 text-sm font-medium hover:bg-brand-pink transition-colors duration-300 shadow-[0_0_30px_-12px_rgba(37,99,214,0.9)]"
-        >
-          Explorar cursos
-        </Link>
+        <div className="hidden md:flex items-center gap-3">
+          <a
+            href="/#contacto"
+            data-testid="navbar-contact-link"
+            className="inline-flex items-center rounded-full border border-brand-pink/35 text-white px-5 py-2 text-sm font-medium hover:bg-brand-pink/10 transition-colors"
+          >
+            Contacto
+          </a>
+          <Link
+            to="/admin/login"
+            data-testid="navbar-admin-btn"
+            className="inline-flex items-center gap-2 rounded-full bg-brand-pink text-white px-5 py-2 text-sm font-medium hover:bg-brand-blue transition-colors duration-300 shadow-[0_0_30px_-12px_rgba(233,79,149,0.9)]"
+          >
+            <ShieldCheck size={16} />
+            Admin
+          </Link>
+        </div>
 
         <button
           onClick={() => setOpen((o) => !o)}
@@ -90,6 +100,23 @@ export default function Navbar() {
               className="mt-2 inline-flex items-center justify-center rounded-full bg-brand-blue text-white px-5 py-2.5 text-sm font-medium"
             >
               Explorar cursos
+            </Link>
+            <a
+              href="/#contacto"
+              onClick={() => setOpen(false)}
+              data-testid="navbar-mobile-contact-link"
+              className="inline-flex items-center justify-center rounded-full border border-brand-pink/35 text-white px-5 py-2.5 text-sm font-medium"
+            >
+              Contacto
+            </a>
+            <Link
+              to="/admin/login"
+              onClick={() => setOpen(false)}
+              data-testid="navbar-mobile-admin-btn"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-pink text-white px-5 py-2.5 text-sm font-medium"
+            >
+              <ShieldCheck size={16} />
+              Admin
             </Link>
           </div>
         </div>

@@ -40,6 +40,12 @@ export default function CourseCard({ course, index = 0 }) {
               Destacado
             </span>
           )}
+          <span
+            data-testid={`course-card-soon-${course.id}`}
+            className="overline bg-brand-blue/20 text-white border border-brand-blue/35 px-2.5 py-1 rounded-full"
+          >
+            Proximamente
+          </span>
         </div>
       </div>
 
