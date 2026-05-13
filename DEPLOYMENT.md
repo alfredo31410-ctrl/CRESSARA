@@ -52,13 +52,15 @@ Notas:
 Recomendacion para Vercel:
 
 1. Importa el repositorio.
-2. Configura `Root Directory` como `CRESARA/frontend`.
-3. Build command: `npm run build`.
-4. Output directory: `build`.
-5. Agrega `REACT_APP_BACKEND_URL`.
-6. Despliega.
+2. Si Vercel detecta el proyecto como monorepo, usa el `vercel.json` de la raiz.
+3. El servicio `frontend` apunta a `frontend/` y usa `create-react-app`.
+4. Build command: `npm run build`.
+5. Output directory: `build`.
+6. Agrega `REACT_APP_BACKEND_URL`.
+7. Despliega.
 
-El archivo `frontend/vercel.json` ya incluye el rewrite necesario para que rutas como `/cursos` y `/nosotros` funcionen al refrescar la pagina.
+El archivo `vercel.json` de la raiz declara los servicios `frontend` y `backend` para que Vercel pueda importar el monorepo.
+El archivo `frontend/vercel.json` incluye el rewrite necesario para que rutas como `/cursos` y `/nosotros` funcionen al refrescar la pagina.
 El archivo `frontend/.npmrc` fuerza `legacy-peer-deps=true` para que Vercel instale las dependencias igual que en la verificacion local.
 
 ## Desarrollo Local
