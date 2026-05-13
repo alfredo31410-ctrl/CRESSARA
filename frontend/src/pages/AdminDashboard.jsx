@@ -40,6 +40,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
+import BrandLogo from "@/components/BrandLogo";
 import { useAuth } from "@/context/AuthContext";
 import { api, formatApiErrorDetail } from "@/lib/api";
 import { toast } from "sonner";
@@ -168,9 +169,9 @@ export default function AdminDashboard() {
       {/* Top bar */}
       <header className="border-b border-white/5 sticky top-0 z-40 glass">
         <div className="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
-          <Link to="/" data-testid="dashboard-logo" className="font-heading font-bold text-lg text-white tracking-tight">
-            CRESARA<span className="text-brand-pink">.</span>
-            <span className="ml-3 text-xs font-mono tracking-widest text-brand-muted uppercase">Admin</span>
+          <Link to="/" data-testid="dashboard-logo" className="flex items-center gap-3">
+            <BrandLogo size="admin" />
+            <span className="text-xs font-mono tracking-widest text-brand-muted uppercase">Admin</span>
           </Link>
           <div className="flex items-center gap-4">
             <span className="hidden md:inline text-sm text-brand-muted">{user?.email}</span>

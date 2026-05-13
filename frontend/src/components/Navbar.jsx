@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import BrandLogo from "@/components/BrandLogo";
 
 const links = [
   { to: "/", label: "Inicio" },
@@ -16,13 +17,14 @@ export default function Navbar() {
       data-testid="main-navbar"
       className="fixed top-0 inset-x-0 z-50 glass"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
         <Link
           to="/"
           data-testid="navbar-logo"
-          className="font-heading font-bold tracking-tighter text-xl text-white"
+          className="flex items-center"
+          aria-label="Cressara inicio"
         >
-          CRESARA<span className="text-brand-pink">.</span>
+          <BrandLogo size="nav" />
         </Link>
 
         <nav className="hidden md:flex items-center gap-10">

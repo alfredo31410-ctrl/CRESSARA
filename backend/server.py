@@ -1,9 +1,3 @@
-from dotenv import load_dotenv
-from pathlib import Path
-
-ROOT_DIR = Path(__file__).parent
-load_dotenv(ROOT_DIR / '.env')
-
 import os
 import logging
 import uuid
@@ -11,17 +5,48 @@ import bcrypt
 import jwt
 from datetime import datetime, timezone, timedelta
 from typing import List, Optional, Literal
+from pathlib import Path
+
+from dotenv import load_dotenv
 
 from fastapi import FastAPI, APIRouter, HTTPException, Request, Response, Depends
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, EmailStr
+
+
+# -------------------- Environment --------------------
+ROOT_DIR = Path(__file__).parent
+load_dotenv(ROOT_DIR / ".env")
+
+
+def env(name: str, default: Optional[str] = None, *, required: bool = False) -> str:
+    """Read environment values with production-friendly error messages."""
+    value = os.environ.get(name, default)
+    if required and not value:
+        raise RuntimeError(
+            f"Missing required environment variable: {name}. "
+            "Add it in the hosting provider environment settings or backend/.env for local development."
+        )
+    return value or ""
+
+
+ENVIRONMENT = env("ENVIRONMENT", "development").lower()
+IS_PRODUCTION = ENVIRONMENT == "production"
+MONGO_URL = env("MONGO_URL", required=True)
+DB_NAME = env("DB_NAME", required=True)
+JWT_SECRET = env("JWT_SECRET", required=True)
+CORS_ORIGINS = [o.strip() for o in env("CORS_ORIGINS", "*").split(",") if o.strip()]
+COOKIE_SECURE = env("COOKIE_SECURE", "true" if IS_PRODUCTION else "false").lower() == "true"
+COOKIE_SAMESITE = env("COOKIE_SAMESITE", "none" if IS_PRODUCTION else "lax").lower()
+
+if IS_PRODUCTION and CORS_ORIGINS == ["*"]:
+    raise RuntimeError("CORS_ORIGINS cannot be '*' in production. Set your exact frontend URL.")
 
 
 # -------------------- DB --------------------
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+client = AsyncIOMotorClient(MONGO_URL)
+db = client[DB_NAME]
 
 
 # -------------------- App --------------------
@@ -37,7 +62,7 @@ JWT_ALGORITHM = "HS256"
 ACCESS_TTL_MIN = 60 * 24  # 24 hours
 
 def get_jwt_secret() -> str:
-    return os.environ["JWT_SECRET"]
+    return JWT_SECRET
 
 def hash_password(password: str) -> str:
     return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
@@ -58,12 +83,14 @@ def create_access_token(user_id: str, email: str) -> str:
     return jwt.encode(payload, get_jwt_secret(), algorithm=JWT_ALGORITHM)
 
 def set_auth_cookie(response: Response, token: str) -> None:
+    # Cross-site auth cookies require SameSite=None and Secure=true in production.
+    # Local HTTP development is easier with SameSite=Lax and COOKIE_SECURE=false.
     response.set_cookie(
         key="access_token",
         value=token,
         httponly=True,
-        secure=True,
-        samesite="none",
+        secure=COOKIE_SECURE,
+        samesite=COOKIE_SAMESITE,
         max_age=ACCESS_TTL_MIN * 60,
         path="/",
     )
@@ -339,8 +366,12 @@ SAMPLE_COURSES = [
 
 
 async def seed_admin():
-    email = os.environ.get("ADMIN_EMAIL", "admin@cresara.com").lower().strip()
-    password = os.environ.get("ADMIN_PASSWORD", "cresara2026")
+    email = env("ADMIN_EMAIL", "admin@cresara.com").lower().strip()
+    password = env("ADMIN_PASSWORD", "")
+    if IS_PRODUCTION and not password:
+        raise RuntimeError("ADMIN_PASSWORD is required in production.")
+    if not password:
+        password = "cresara2026"
     existing = await db.users.find_one({"email": email})
     if existing is None:
         await db.users.insert_one({
@@ -396,11 +427,10 @@ async def shutdown_db_client():
 app.include_router(api_router)
 
 # CORS
-_origins = [o.strip() for o in os.environ.get("CORS_ORIGINS", "*").split(",") if o.strip()]
 app.add_middleware(
     CORSMiddleware,
-    allow_origin_regex=".*" if _origins == ["*"] else None,
-    allow_origins=_origins if _origins != ["*"] else [],
+    allow_origin_regex=".*" if CORS_ORIGINS == ["*"] else None,
+    allow_origins=CORS_ORIGINS if CORS_ORIGINS != ["*"] else [],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

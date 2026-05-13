@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import BrandLogo from "@/components/BrandLogo";
 
 export default function Footer() {
   return (
@@ -11,10 +12,11 @@ export default function Footer() {
         <div>
           <Link
             to="/"
-            className="font-heading font-bold tracking-tighter text-2xl text-white"
+            className="inline-flex items-center"
             data-testid="footer-logo"
+            aria-label="Cressara inicio"
           >
-            CRESARA<span className="text-brand-pink">.</span>
+            <BrandLogo size="footer" />
           </Link>
           <p className="mt-4 text-sm text-brand-muted leading-relaxed max-w-xs">
             Educación emocional aplicada. Psicología real para decidir mejor cómo vivir.
