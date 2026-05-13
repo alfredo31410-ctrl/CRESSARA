@@ -56,7 +56,7 @@ Recomendacion para Vercel:
 
 1. Importa el repositorio.
 2. Usa el `vercel.json` de la raiz.
-3. El servicio `frontend` apunta a `frontend/` y el servicio `api` apunta a `api/`.
+3. El servicio `frontend` apunta a `frontend/` y el servicio `api` apunta a `api/index.py`.
 4. Build command: `npm run build`.
 5. Output directory: `build`.
 6. Agrega las variables de backend (`MONGO_URL`, `DB_NAME`, `JWT_SECRET`, etc.).
