@@ -32,6 +32,7 @@ Configura estas variables en el proveedor donde publiques FastAPI:
 ENVIRONMENT=production
 MONGO_URL=mongodb+srv://usuario:password@cluster.mongodb.net/?retryWrites=true&w=majority
 DB_NAME=cressara
+MONGO_TIMEOUT_MS=5000
 JWT_SECRET=un-secreto-largo-random-y-privado
 ADMIN_EMAIL=admin@cresara.com
 ADMIN_PASSWORD=password-fuerte-y-privado
@@ -43,6 +44,7 @@ COOKIE_SAMESITE=none
 Notas:
 
 - `JWT_SECRET` debe ser largo y unico. No uses el ejemplo.
+- `MONGO_URL` debe venir de MongoDB Atlas o del proveedor de Mongo que uses.
 - `CORS_ORIGINS` no debe ser `*` en produccion. Pon exactamente los dominios donde vive el frontend.
 - `COOKIE_SECURE=true` es obligatorio cuando uses HTTPS, que es lo normal en produccion.
 - `COOKIE_SAMESITE=none` permite que el frontend y el backend vivan en dominios distintos.

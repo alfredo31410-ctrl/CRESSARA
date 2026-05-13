@@ -6,6 +6,7 @@ Plataforma de educacion emocional aplicada con frontend en React y backend en Fa
 
 - `frontend/`: aplicacion publica y panel de administracion.
 - `backend/`: API, autenticacion, cursos y seed inicial de administrador.
+- `DATABASE.md`: guia para conectar MongoDB Atlas y verificar la base de datos.
 - `DEPLOYMENT.md`: guia para configurar produccion, Vercel y variables de entorno.
 
 ## Configuracion

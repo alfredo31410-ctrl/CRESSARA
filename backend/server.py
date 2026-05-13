@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, APIRouter, HTTPException, Request, Response, Depends
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo.errors import PyMongoError, ServerSelectionTimeoutError
 from pydantic import BaseModel, EmailStr
 
 
@@ -39,14 +40,27 @@ JWT_SECRET = env("JWT_SECRET", required=True)
 CORS_ORIGINS = [o.strip() for o in env("CORS_ORIGINS", "*").split(",") if o.strip()]
 COOKIE_SECURE = env("COOKIE_SECURE", "true" if IS_PRODUCTION else "false").lower() == "true"
 COOKIE_SAMESITE = env("COOKIE_SAMESITE", "none" if IS_PRODUCTION else "lax").lower()
+MONGO_TIMEOUT_MS = int(env("MONGO_TIMEOUT_MS", "5000"))
 
 if IS_PRODUCTION and CORS_ORIGINS == ["*"]:
     raise RuntimeError("CORS_ORIGINS cannot be '*' in production. Set your exact frontend URL.")
 
 
 # -------------------- DB --------------------
-client = AsyncIOMotorClient(MONGO_URL)
+client = AsyncIOMotorClient(MONGO_URL, serverSelectionTimeoutMS=MONGO_TIMEOUT_MS)
 db = client[DB_NAME]
+
+
+async def ping_database() -> None:
+    """Verify that MongoDB is reachable before the app serves traffic."""
+    try:
+        await client.admin.command("ping")
+    except ServerSelectionTimeoutError as exc:
+        logger.error("MongoDB connection timed out. Check MONGO_URL, Atlas network access, and credentials.")
+        raise RuntimeError("MongoDB connection timed out") from exc
+    except PyMongoError as exc:
+        logger.error("MongoDB connection failed: %s", exc)
+        raise RuntimeError("MongoDB connection failed") from exc
 
 
 # -------------------- App --------------------
@@ -267,6 +281,16 @@ async def health():
     return {"status": "ok", "service": "cresara"}
 
 
+@api_router.get("/health/db")
+async def health_db():
+    try:
+        await client.admin.command("ping")
+        return {"status": "ok", "service": "cresara", "database": DB_NAME}
+    except PyMongoError as exc:
+        logger.warning("Database health check failed: %s", exc)
+        raise HTTPException(status_code=503, detail="Database unavailable")
+
+
 # -------------------- Seed --------------------
 SAMPLE_COURSES = [
     # Mujeres
@@ -411,6 +435,7 @@ async def seed_courses():
 
 @app.on_event("startup")
 async def on_startup():
+    await ping_database()
     await db.users.create_index("email", unique=True)
     await db.courses.create_index("category")
     await db.courses.create_index("featured")
