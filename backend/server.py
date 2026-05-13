@@ -65,10 +65,33 @@ async def ping_database() -> None:
 
 # -------------------- App --------------------
 app = FastAPI(title="CRESARA API")
-api_router = APIRouter(prefix="/api")
+api_router = APIRouter()
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("cresara")
+
+db_ready = False
+
+
+async def ensure_database_ready() -> None:
+    """Initialize Mongo indexes and seed data on cold starts/serverless requests."""
+    global db_ready
+    if db_ready:
+        return
+    await ping_database()
+    await db.users.create_index("email", unique=True)
+    await db.courses.create_index("category")
+    await db.courses.create_index("featured")
+    await seed_admin()
+    await seed_courses()
+    db_ready = True
+
+
+@app.middleware("http")
+async def ensure_db_before_api_requests(request: Request, call_next):
+    if request.url.path.startswith("/api"):
+        await ensure_database_ready()
+    return await call_next(request)
 
 
 # -------------------- Auth utils --------------------
@@ -435,12 +458,7 @@ async def seed_courses():
 
 @app.on_event("startup")
 async def on_startup():
-    await ping_database()
-    await db.users.create_index("email", unique=True)
-    await db.courses.create_index("category")
-    await db.courses.create_index("featured")
-    await seed_admin()
-    await seed_courses()
+    await ensure_database_ready()
 
 
 @app.on_event("shutdown")
@@ -448,8 +466,11 @@ async def shutdown_db_client():
     client.close()
 
 
-# Include router
-app.include_router(api_router)
+# Include router. Local/dev uses /api. Vercel can also expose unprefixed routes
+# if its service router strips the /api routePrefix before reaching FastAPI.
+app.include_router(api_router, prefix="/api")
+if env("ENABLE_UNPREFIXED_API", "false").lower() == "true":
+    app.include_router(api_router)
 
 # CORS
 app.add_middleware(

@@ -4,8 +4,9 @@ Esta guia deja el proyecto listo para desplegar el frontend en Vercel y conectar
 
 ## Estructura
 
-- `frontend/`: aplicacion React/Create React App. Es la parte que va a Vercel.
-- `backend/`: API FastAPI. Puede vivir en un hosting para Python como Render, Railway, Fly.io, un VPS o un servicio compatible con ASGI.
+- `frontend/`: aplicacion React/Create React App.
+- `backend/`: API FastAPI.
+- `api/`: entrypoint serverless para correr FastAPI dentro de Vercel.
 
 ## Variables De Entorno
 
@@ -16,17 +17,17 @@ Nunca subas archivos `.env` reales al repositorio. Usa los archivos `.env.exampl
 En Vercel, dentro de `Project Settings > Environment Variables`:
 
 ```env
-REACT_APP_BACKEND_URL=https://tu-backend.com
+REACT_APP_BACKEND_URL=
 ```
 
 Notas:
 
-- No agregues `/api` al final. El codigo lo agrega automaticamente.
-- Si el backend queda en un subdominio, por ejemplo `https://api.cressara.com`, usa ese valor.
+- Si dejas `REACT_APP_BACKEND_URL` vacio, el frontend llamara a `/api` en el mismo dominio de Vercel.
+- Si separas el backend en otro hosting, usa esa URL sin `/api` al final.
 
 ### Backend
 
-Configura estas variables en el proveedor donde publiques FastAPI:
+Configura estas variables en Vercel:
 
 ```env
 ENVIRONMENT=production
@@ -54,14 +55,14 @@ Notas:
 Recomendacion para Vercel:
 
 1. Importa el repositorio.
-2. Si Vercel detecta el proyecto como monorepo, usa el `vercel.json` de la raiz.
-3. El servicio `frontend` apunta a `frontend/` y usa `create-react-app`.
+2. Usa el `vercel.json` de la raiz.
+3. El servicio `frontend` apunta a `frontend/` y el servicio `api` apunta a `api/`.
 4. Build command: `npm run build`.
 5. Output directory: `build`.
-6. Agrega `REACT_APP_BACKEND_URL`.
+6. Agrega las variables de backend (`MONGO_URL`, `DB_NAME`, `JWT_SECRET`, etc.).
 7. Despliega.
 
-El archivo `vercel.json` de la raiz declara solo el servicio `frontend`. El backend se despliega aparte en un hosting compatible con FastAPI.
+El archivo `vercel.json` de la raiz declara el frontend y el entrypoint serverless de FastAPI.
 El archivo `frontend/vercel.json` incluye el rewrite necesario para que rutas como `/cursos` y `/nosotros` funcionen al refrescar la pagina.
 El archivo `frontend/.npmrc` fuerza `legacy-peer-deps=true` para que Vercel instale las dependencias igual que en la verificacion local.
 

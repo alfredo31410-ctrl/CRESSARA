@@ -32,7 +32,7 @@ MONGO_TIMEOUT_MS=5000
 Cuando el backend este publicado, visita:
 
 ```text
-https://tu-backend.com/api/health/db
+https://tu-proyecto.vercel.app/api/health/db
 ```
 
 Respuesta esperada:

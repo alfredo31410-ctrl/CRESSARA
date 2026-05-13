@@ -1,16 +1,10 @@
 import axios from "axios";
 
-// CRA injects REACT_APP_* variables at build time. In Vercel this must point
-// to the public backend URL, for example https://api.cressara.com.
+// CRA injects REACT_APP_* variables at build time. If this is empty, the
+// frontend uses the same Vercel domain and calls /api directly.
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL?.replace(/\/$/, "");
 
-if (!BACKEND_URL) {
-  throw new Error(
-    "Missing REACT_APP_BACKEND_URL. Configure it in frontend/.env or in Vercel Environment Variables."
-  );
-}
-
-export const API = `${BACKEND_URL}/api`;
+export const API = `${BACKEND_URL || ""}/api`;
 
 export const api = axios.create({
   baseURL: API,
