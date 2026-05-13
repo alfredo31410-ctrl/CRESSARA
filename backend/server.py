@@ -231,6 +231,7 @@ class Course(CourseBase):
 # -------------------- Auth endpoints --------------------
 @api_router.post("/auth/login", response_model=UserPublic)
 async def login(payload: LoginRequest, response: Response):
+    await sync_admin_user()
     email = payload.email.lower().strip()
     user = await db.users.find_one({"email": email})
     if not user or not verify_password(payload.password, user["password_hash"]):
@@ -449,7 +450,7 @@ SAMPLE_COURSES = [
 ]
 
 
-async def seed_admin():
+async def sync_admin_user():
     email = env("ADMIN_EMAIL", "admin@cresara.com").lower().strip()
     password = env("ADMIN_PASSWORD", "")
     if IS_PRODUCTION and not password:
@@ -473,6 +474,10 @@ async def seed_admin():
             {"$set": {"password_hash": hash_password(password)}}
         )
         logger.info(f"Admin password actualizada: {email}")
+
+
+async def seed_admin():
+    await sync_admin_user()
 
 
 async def seed_courses():
