@@ -9,5 +9,15 @@
       "entrypoint": "api/index.py",
       "routePrefix": "/api"
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/landings",
+      "destination": "https://cresara-landings.vercel.app/landings/desaparecer-para-sostener"
+    },
+    {
+      "source": "/landings/:path*",
+      "destination": "https://cresara-landings.vercel.app/landings/:path*"
+    }
+  ]
 }
