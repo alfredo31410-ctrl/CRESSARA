@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Menu, ShieldCheck, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import BrandLogo from "@/components/BrandLogo";
 
 const links = [
   { to: "/", label: "Inicio" },
-  { to: "/cursos", label: "Cursos" },
+  { to: "/comunidad", label: "Comunidad" },
   { to: "/nosotros", label: "Nosotros" },
 ];
 
@@ -15,59 +15,57 @@ export default function Navbar() {
   return (
     <header
       data-testid="main-navbar"
-      className="fixed top-0 inset-x-0 z-50 glass"
+      className="fixed inset-x-0 top-0 z-50 glass"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 md:px-12">
         <Link
           to="/"
           data-testid="navbar-logo"
           className="flex items-center"
           aria-label="Cressara inicio"
+          onClick={() => setOpen(false)}
         >
           <BrandLogo size="nav" />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-10">
-          {links.map((l) => (
+        <nav className="hidden items-center gap-10 md:flex">
+          {links.map((link) => (
             <NavLink
-              key={l.to}
-              to={l.to}
-              end={l.to === "/"}
-              data-testid={`nav-link-${l.label.toLowerCase()}`}
+              key={link.to}
+              to={link.to}
+              end={link.to === "/"}
+              data-testid={`nav-link-${link.label.toLowerCase()}`}
               className={({ isActive }) =>
                 `text-sm transition-colors ${
-                  isActive ? "text-white" : "text-brand-muted hover:text-white"
+                  isActive
+                    ? "font-medium text-white"
+                    : "text-brand-lavender/85 hover:text-white"
                 }`
               }
             >
-              {l.label}
+              {link.label}
             </NavLink>
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden items-center gap-3 md:flex">
           <a
             href="/#contacto"
             data-testid="navbar-contact-link"
-            className="inline-flex items-center rounded-full border border-brand-pink/35 text-white px-5 py-2 text-sm font-medium hover:bg-brand-pink/10 transition-colors"
+            className="inline-flex items-center rounded-full border border-brand-lavender/45 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-pink/15"
           >
             Contacto
           </a>
-          <Link
-            to="/admin/login"
-            data-testid="navbar-admin-btn"
-            className="inline-flex items-center gap-2 rounded-full bg-brand-pink text-white px-5 py-2 text-sm font-medium hover:bg-brand-blue transition-colors duration-300 shadow-[0_0_30px_-12px_rgba(233,79,149,0.9)]"
-          >
-            <ShieldCheck size={16} />
-            Admin
-          </Link>
+
         </div>
 
         <button
-          onClick={() => setOpen((o) => !o)}
+          type="button"
+          onClick={() => setOpen((current) => !current)}
           data-testid="navbar-mobile-toggle"
-          className="md:hidden text-white"
-          aria-label="Menú"
+          className="text-white md:hidden"
+          aria-label={open ? "Cerrar menú" : "Abrir menú"}
+          aria-expanded={open}
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -76,48 +74,46 @@ export default function Navbar() {
       {open && (
         <div
           data-testid="navbar-mobile-panel"
-          className="md:hidden border-t border-white/5 bg-brand-bg"
+          className="border-t border-brand-lavender/20 bg-[#5B274B] md:hidden"
         >
-          <div className="px-6 py-6 flex flex-col gap-5">
-            {links.map((l) => (
+          <div className="flex flex-col gap-5 px-6 py-6">
+            {links.map((link) => (
               <NavLink
-                key={l.to}
-                to={l.to}
-                end={l.to === "/"}
+                key={link.to}
+                to={link.to}
+                end={link.to === "/"}
                 onClick={() => setOpen(false)}
-                data-testid={`mobile-nav-link-${l.label.toLowerCase()}`}
+                data-testid={`mobile-nav-link-${link.label.toLowerCase()}`}
                 className={({ isActive }) =>
-                  `text-base ${isActive ? "text-white" : "text-brand-muted"}`
+                  `text-base transition-colors ${
+                    isActive
+                      ? "font-medium text-white"
+                      : "text-brand-lavender/85 hover:text-white"
+                  }`
                 }
               >
-                {l.label}
+                {link.label}
               </NavLink>
             ))}
+
             <Link
-              to="/cursos"
+              to="/comunidad"
               onClick={() => setOpen(false)}
               data-testid="navbar-mobile-cta"
-              className="mt-2 inline-flex items-center justify-center rounded-full bg-brand-blue text-white px-5 py-2.5 text-sm font-medium"
+              className="mt-2 inline-flex items-center justify-center rounded-full bg-brand-blue px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-pink"
             >
-              Explorar cursos
+              Conocer la comunidad
             </Link>
+
             <a
               href="/#contacto"
               onClick={() => setOpen(false)}
               data-testid="navbar-mobile-contact-link"
-              className="inline-flex items-center justify-center rounded-full border border-brand-pink/35 text-white px-5 py-2.5 text-sm font-medium"
+              className="inline-flex items-center justify-center rounded-full border border-brand-lavender/45 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-pink/15"
             >
               Contacto
             </a>
-            <Link
-              to="/admin/login"
-              onClick={() => setOpen(false)}
-              data-testid="navbar-mobile-admin-btn"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-pink text-white px-5 py-2.5 text-sm font-medium"
-            >
-              <ShieldCheck size={16} />
-              Admin
-            </Link>
+
           </div>
         </div>
       )}

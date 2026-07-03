@@ -48,19 +48,30 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        brand: {
-          bg: "#05070D",
-          surface: "#0D1324",
-          elevated: "#111A33",
-          text: "#F8FAFF",
-          muted: "#AEB8D2",
-          subtle: "#6F7A99",
-          blue: "#2563D6",
-          blueDark: "#123A8A",
-          pink: "#E94F95",
-          pinkDark: "#B92D70",
-          ink: "#02040A",
-        },
+       brand: {
+  // Fondos claros pastel
+  bg: "#FFD1EC",
+  surface: "#FFF8FC",
+  elevated: "#FFE6F3",
+
+  // Texto para fondo claro
+  text: "#4A263A",
+  muted: "#76516A",
+  subtle: "#9A7189",
+  ink: "#321426",
+
+  // Acciones principales
+  blue: "#A152BA",
+  blueDark: "#7D3B93",
+
+  pink: "#FF7AAC",
+  pinkDark: "#D95091",
+
+  // Apoyos visuales
+  blush: "#FFB9AD",
+  lavender: "#FFD1EC",
+  mist: "#EFDDF2",
+},
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -76,6 +87,10 @@ module.exports = {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
+        "pulse-soft": {
+          "0%, 100%": { opacity: "0.72", transform: "scale(1)" },
+          "50%": { opacity: "1", transform: "scale(1.025)" },
+        },
         marquee: {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
@@ -84,6 +99,7 @@ module.exports = {
       animation: {
         "fade-up": "fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both",
         "fade-in": "fade-in 0.5s ease-out both",
+        "pulse-soft": "pulse-soft 4.5s ease-in-out infinite",
         marquee: "marquee 60s linear infinite",
       },
     },

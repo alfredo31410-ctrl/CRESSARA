@@ -1,14 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Mail } from "lucide-react";
 import BrandLogo from "@/components/BrandLogo";
+import { SOCIAL_LINKS } from "@/components/SocialLinks";
 
 export default function Footer() {
   return (
     <footer
       data-testid="main-footer"
-      className="border-t border-white/5 bg-brand-bg mt-24"
+      className="mt-24 border-t border-brand-pink/25 bg-white/55"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 py-16 md:grid-cols-2 lg:grid-cols-4 md:px-12">
         <div>
           <Link
             to="/"
@@ -18,26 +20,57 @@ export default function Footer() {
           >
             <BrandLogo size="footer" />
           </Link>
-          <p className="mt-4 text-sm text-brand-muted leading-relaxed max-w-xs">
-            Educación emocional aplicada. Psicología real para decidir mejor cómo vivir.
+
+          <p className="mt-4 max-w-xs text-sm leading-relaxed text-brand-muted">
+            Educación emocional aplicada para comprender lo que sientes y
+            decidir con más claridad cómo vivir.
           </p>
+
+          <a
+            href="mailto:contacto@somoscressara.com"
+            className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-brand-blue transition-colors hover:text-brand-pink"
+          >
+            <Mail size={16} />
+            contacto@somoscressara.com
+          </a>
         </div>
 
         <div>
-          <p className="overline mb-4">Plataforma</p>
+          <p className="overline mb-4">Cressara</p>
+
           <ul className="space-y-3 text-sm text-brand-muted">
             <li>
-              <Link to="/cursos" className="hover:text-white transition-colors">
-                Cursos
+              <Link
+                to="/"
+                className="transition-colors hover:text-brand-blue"
+              >
+                Inicio
               </Link>
             </li>
+
             <li>
-              <Link to="/nosotros" className="hover:text-white transition-colors">
+              <Link
+                to="/comunidad"
+                className="transition-colors hover:text-brand-blue"
+              >
+                Comunidad
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to="/nosotros"
+                className="transition-colors hover:text-brand-blue"
+              >
                 Nosotros
               </Link>
             </li>
+
             <li>
-              <a href="/#contacto" className="hover:text-white transition-colors">
+              <a
+                href="/#contacto"
+                className="transition-colors hover:text-brand-blue"
+              >
                 Contacto
               </a>
             </li>
@@ -45,21 +78,89 @@ export default function Footer() {
         </div>
 
         <div>
-          <p className="overline mb-4">Filosofía</p>
-          <p className="text-sm text-brand-muted leading-relaxed max-w-sm">
-            No es terapia. No es motivación. Es psicología aplicada a la vida real.
+          <p className="overline mb-4">Síguenos</p>
+
+          <ul className="space-y-3">
+            {SOCIAL_LINKS.map(({ label, handle, href, icon: Icon }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Abrir ${label} de Cressara`}
+                  className="group inline-flex items-center gap-3 text-sm text-brand-muted transition-colors hover:text-brand-blue"
+                >
+                  <Icon
+                    size={17}
+                    className="text-brand-pink transition-transform group-hover:scale-110"
+                  />
+
+                  <span>
+                    {label}
+                    <span className="ml-1 text-brand-subtle">{handle}</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <p className="overline mb-4">Legal</p>
+
+          <ul className="space-y-3 text-sm text-brand-muted">
+            <li>
+              <Link
+                to="/aviso-de-privacidad"
+                className="transition-colors hover:text-brand-blue"
+              >
+                Aviso de privacidad
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to="/terminos-y-condiciones"
+                className="transition-colors hover:text-brand-blue"
+              >
+                Términos y condiciones
+              </Link>
+            </li>
+          </ul>
+
+          <p className="mt-6 max-w-xs text-sm leading-relaxed text-brand-muted">
+            No es terapia. No reemplaza un proceso clínico. Es educación
+            emocional aplicada a la vida real.
           </p>
         </div>
       </div>
 
-      <div className="border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="border-t border-brand-pink/20">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 text-center md:flex-row md:px-12 md:text-left">
           <p className="text-xs text-brand-subtle">
-            © {new Date().getFullYear()} CRESARA. Todos los derechos reservados.
+            © {new Date().getFullYear()} CRESSARA. Todos los derechos
+            reservados.
           </p>
-          <p className="text-xs text-brand-subtle font-mono tracking-widest">
-            ENTENDER · SANAR · CONSTRUIR · DECIDIR
-          </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-brand-subtle md:justify-end">
+            <Link
+              to="/aviso-de-privacidad"
+              className="transition-colors hover:text-brand-blue"
+            >
+              Privacidad
+            </Link>
+
+            <Link
+              to="/terminos-y-condiciones"
+              className="transition-colors hover:text-brand-blue"
+            >
+              Términos
+            </Link>
+
+            <span className="font-mono tracking-widest">
+              ENTENDER · SANAR · CONSTRUIR · DECIDIR
+            </span>
+          </div>
         </div>
       </div>
     </footer>

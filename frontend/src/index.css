@@ -7,25 +7,36 @@
 
 @layer base {
   :root {
-    --background: 222 56% 4%;
-    --foreground: 222 100% 99%;
-    --card: 222 47% 10%;
-    --card-foreground: 222 100% 99%;
-    --popover: 222 47% 10%;
-    --popover-foreground: 222 100% 99%;
-    --primary: 220 70% 49%;
-    --primary-foreground: 222 100% 99%;
-    --secondary: 220 50% 14%;
-    --secondary-foreground: 222 100% 99%;
-    --muted: 220 40% 14%;
-    --muted-foreground: 224 22% 75%;
-    --accent: 332 79% 61%;
-    --accent-foreground: 222 100% 99%;
+    /* Base clara pastel */
+    --background: 319 100% 91%;
+    --foreground: 330 31% 22%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 330 31% 22%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 330 31% 22%;
+
+    /* Botones principales */
+    --primary: 289 43% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 324 100% 96%;
+    --secondary-foreground: 330 31% 22%;
+
+    --muted: 323 66% 92%;
+    --muted-foreground: 332 19% 40%;
+
+    --accent: 337 100% 74%;
+    --accent-foreground: 330 31% 22%;
+
     --destructive: 0 62.8% 50%;
-    --destructive-foreground: 220 13% 96%;
-    --border: 222 28% 21%;
-    --input: 222 32% 15%;
-    --ring: 332 79% 61%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 322 57% 84%;
+    --input: 322 57% 84%;
+    --ring: 337 100% 74%;
+
     --radius: 0.75rem;
   }
 
@@ -35,16 +46,38 @@
 
   html,
   body {
-    background-color: #05070d;
-    color: #f8faff;
+    min-height: 100%;
+    background:
+      radial-gradient(
+        circle at 85% 5%,
+        rgba(255, 122, 172, 0.4) 0%,
+        transparent 28%
+      ),
+      radial-gradient(
+        circle at 10% 55%,
+        rgba(255, 185, 173, 0.34) 0%,
+        transparent 34%
+      ),
+      radial-gradient(
+        circle at 72% 90%,
+        rgba(161, 82, 186, 0.14) 0%,
+        transparent 32%
+      ),
+      linear-gradient(
+        135deg,
+        #ffd1ec 0%,
+        #fff7fc 52%,
+        #ffb9ad 100%
+      );
+    color: #4a263a;
     font-family: "DM Sans", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   ::selection {
-    background-color: rgba(233, 79, 149, 0.34);
-    color: #f8faff;
+    background-color: rgba(255, 122, 172, 0.5);
+    color: #321426;
   }
 }
 
@@ -58,25 +91,38 @@
     text-wrap: balance;
   }
 
+  /*
+    El header se mantiene profundo para conservar
+    contraste con los links y botones blancos.
+  */
   .glass {
-    background: rgba(5, 7, 13, 0.72);
+    background: rgba(91, 39, 75, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(37, 99, 214, 0.22);
+    border-bottom: 1px solid rgba(255, 209, 236, 0.45);
+    box-shadow: 0 10px 28px rgba(80, 30, 62, 0.18);
   }
 
   .glow-pink {
-    box-shadow: 0 0 80px -20px rgba(233, 79, 149, 0.42);
+    box-shadow: 0 0 80px -20px rgba(255, 122, 172, 0.58);
   }
 
   .glow-purple {
-    box-shadow: 0 0 80px -20px rgba(37, 99, 214, 0.42);
+    box-shadow: 0 0 80px -20px rgba(161, 82, 186, 0.42);
   }
 
   .grid-noise {
     background-image:
-      linear-gradient(to right, rgba(37, 99, 214, 0.12) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(233, 79, 149, 0.07) 1px, transparent 1px);
+      linear-gradient(
+        to right,
+        rgba(161, 82, 186, 0.09) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(255, 122, 172, 0.09) 1px,
+        transparent 1px
+      );
     background-size: 64px 64px;
   }
 
@@ -85,7 +131,7 @@
     font-size: 0.7rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: #e94f95;
+    color: #c64680;
   }
 }
 

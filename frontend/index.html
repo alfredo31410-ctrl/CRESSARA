@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#FFD1EC" />
+    <meta
+      name="description"
+      content="Cressara: educacion emocional aplicada para transformar, sanar y crecer."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>Cressara</title>
+    <script>
+      window.addEventListener(
+        "error",
+        function (e) {
+          if (
+            e.error instanceof DOMException &&
+            e.error.name === "DataCloneError" &&
+            e.message &&
+            e.message.includes("PerformanceServerTiming")
+          ) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
+          }
+        },
+        true,
+      );
+    </script>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/index.jsx"></script>
+  </body>
+</html>

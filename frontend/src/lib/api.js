@@ -1,8 +1,12 @@
 import axios from "axios";
 
-// CRA injects REACT_APP_* variables at build time. If this is empty, the
-// frontend uses the same Vercel domain and calls /api directly.
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL?.replace(/\/$/, "");
+// Vite exposes env values through import.meta.env. We keep REACT_APP_* support
+// so existing .env files and Vercel settings continue working.
+const BACKEND_URL = (
+  import.meta.env.VITE_BACKEND_URL ||
+  import.meta.env.REACT_APP_BACKEND_URL ||
+  ""
+).replace(/\/$/, "");
 
 export const API = `${BACKEND_URL || ""}/api`;
 
