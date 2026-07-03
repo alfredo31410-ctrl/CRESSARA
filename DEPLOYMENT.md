@@ -4,7 +4,7 @@ Esta guia deja el proyecto listo para desplegar el frontend en Vercel y conectar
 
 ## Estructura
 
-- `frontend/`: aplicacion React/Create React App.
+- `frontend/`: aplicacion React/Vite.
 - `backend/`: API FastAPI.
 - `api/`: entrypoint serverless para correr FastAPI dentro de Vercel.
 
@@ -58,7 +58,7 @@ Recomendacion para Vercel:
 2. Usa el `vercel.json` de la raiz.
 3. El servicio `frontend` apunta a `frontend/` y el servicio `api` apunta a `api/index.py`.
 4. Build command: `npm run build`.
-5. Output directory: `build`.
+5. Output directory: `dist`.
 6. Agrega las variables de backend (`MONGO_URL`, `DB_NAME`, `JWT_SECRET`, etc.).
 7. Despliega.
 
