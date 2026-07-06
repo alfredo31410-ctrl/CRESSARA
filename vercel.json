@@ -3,7 +3,7 @@
     "frontend": {
       "entrypoint": "frontend",
       "routePrefix": "/",
-      "framework": "create-react-app"
+      "framework": "vite"
     },
     "api": {
       "entrypoint": "api/index.py",
