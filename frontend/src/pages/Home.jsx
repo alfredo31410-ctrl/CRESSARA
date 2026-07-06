@@ -25,20 +25,20 @@ const HOTMART_URL =
 
 const VIDEOS = [
   {
-    id: "sCJNelikVvo",
+    id: "1POTg_b6-do",
     title: "Reconecta contigo",
     description:
       "Una conversación para mirar lo que necesitas y volver a escucharte con más claridad.",
-    url: "https://www.youtube.com/watch?v=sCJNelikVvo&t=547s",
-    embedUrl: "https://www.youtube-nocookie.com/embed/sCJNelikVvo?start=547&rel=0&playsinline=1",
+    url: "https://www.youtube.com/watch?v=1POTg_b6-do",
+    embedUrl: "https://www.youtube.com/embed/1POTg_b6-do?rel=0&playsinline=1",
   },
   {
-    id: "DsgM15nvh84",
-    title: "Reconectar contigo también importa",
+    id: "L1FvN5a_Pws",
+    title: "Carga mental y autocuidado consciente",
     description:
-      "Una conversación para comprender los cambios, las emociones y la importancia de darte espacio.",
-    url: "https://www.youtube.com/watch?v=DsgM15nvh84&t=1947s",
-    embedUrl: "https://www.youtube-nocookie.com/embed/DsgM15nvh84?start=1947&rel=0&playsinline=1",
+      "Una reflexión para comprender el peso mental, los cambios y la importancia de darte espacio.",
+    url: "https://www.youtube.com/watch?v=L1FvN5a_Pws",
+    embedUrl: "https://www.youtube.com/embed/L1FvN5a_Pws?rel=0&playsinline=1",
   },
   {
     id: "c7rzGoN8Qfc",
@@ -46,7 +46,7 @@ const VIDEOS = [
     description:
       "Una reflexión para identificar lo que repites y empezar a elegir desde un lugar más consciente.",
     url: "https://www.youtube.com/watch?v=c7rzGoN8Qfc&t=1668s",
-    embedUrl: "https://www.youtube-nocookie.com/embed/c7rzGoN8Qfc?start=1668&rel=0&playsinline=1",
+    embedUrl: "https://www.youtube.com/embed/c7rzGoN8Qfc?start=1668&rel=0&playsinline=1",
   },
 ];
 
