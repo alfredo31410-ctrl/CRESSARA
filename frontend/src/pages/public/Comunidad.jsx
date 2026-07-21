@@ -6,7 +6,6 @@ import {
   ArrowRight,
   CalendarDays,
   CheckCircle2,
-  CirclePlay,
   HeartHandshake,
   MessageCircle,
   Sparkles,
@@ -15,37 +14,9 @@ import {
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SocialLinks from "@/components/content/SocialLinks";
-import VideoPreview from "@/components/content/VideoPreview";
 
 const HOTMART_URL =
   "https://pay.hotmart.com/W106231401S?off=lc9k824d&checkoutMode=10&bid=1783099219778";
-
-const VIDEOS = [
-  {
-    id: "1POTg_b6-do",
-    title: "Una pausa para volver a ti",
-    description:
-      "Una reflexión para recordar que también mereces escucharte.",
-    url: "https://www.youtube.com/watch?v=1POTg_b6-do",
-    embedUrl: "https://www.youtube.com/embed/1POTg_b6-do?rel=0&playsinline=1",
-  },
-  {
-    id: "L1FvN5a_Pws",
-    title: "Carga mental y autocuidado consciente",
-    description:
-      "No tienes que cargar con todo ni dejarte siempre para después.",
-    url: "https://www.youtube.com/watch?v=L1FvN5a_Pws",
-    embedUrl: "https://www.youtube.com/embed/L1FvN5a_Pws?rel=0&playsinline=1",
-  },
-  {
-    id: "c7rzGoN8Qfc",
-    title: "Un espacio para ti",
-    description:
-      "Mirar lo que repites también puede abrir una nueva forma de elegir.",
-    url: "https://www.youtube.com/watch?v=c7rzGoN8Qfc&t=1668s",
-    embedUrl: "https://www.youtube.com/embed/c7rzGoN8Qfc?start=1668&rel=0&playsinline=1",
-  },
-];
 
 const MONTH_STEPS = [
   {
@@ -145,7 +116,7 @@ export default function Comunidad() {
         <div className="mx-auto grid max-w-7xl items-center gap-14 md:grid-cols-12">
           <div className="md:col-span-7">
             <p className="mb-6 font-mono text-xs uppercase tracking-[0.24em] text-brand-lavender">
-             Comunidad Cressara
+              Membresía mensual · Cressara Club
             </p>
 
             <h1 className="font-heading text-balance text-5xl font-bold leading-[0.95] tracking-tighter text-white md:text-7xl">
@@ -398,52 +369,6 @@ export default function Comunidad() {
         </div>
       </section>
 
-      {/* VIDEOS */}
-      <section className="mx-auto max-w-7xl px-6 py-24 md:px-12 md:py-32">
-        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-3xl">
-            <p className="overline mb-5">Comunidad Cressara</p>
-
-            <h2 className="font-heading text-balance text-3xl font-medium tracking-tighter text-brand-ink md:text-5xl">
-              Conversaciones para volver a ti.
-            </h2>
-          </div>
-
-          <p className="max-w-md text-base leading-relaxed text-brand-muted">
-            Explora reflexiones breves que forman parte de la conversación que
-            queremos abrir dentro de Cressara.
-          </p>
-        </div>
-
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
-          {VIDEOS.map((video, index) => (
-            <article
-              key={video.id}
-              className="group animate-fade-up overflow-hidden rounded-2xl border border-brand-pink/25 bg-white/90 shadow-[0_22px_50px_-34px_rgba(161,82,186,0.72)] transition-all duration-500 hover:-translate-y-2 hover:border-brand-pink/55"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <VideoPreview video={video} />
-
-              <div className="p-6">
-                <div className="flex items-center gap-2 text-brand-pink">
-                  <CirclePlay size={18} />
-                  <span className="font-mono text-xs uppercase tracking-[0.18em]">
-                    Video
-                  </span>
-                </div>
-
-                <h3 className="font-heading mt-5 text-2xl tracking-tight text-brand-ink">
-                  {video.title}
-                </h3>
-
-                <p className="mt-3 text-sm leading-relaxed text-brand-muted">
-                  {video.description}
-                </p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
       {/* REDES SOCIALES */}
       <SocialLinks />
       {/* BENEFICIOS */}
@@ -492,8 +417,8 @@ export default function Comunidad() {
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-brand-muted">
-            Una hora para reconectar contigo, comprender lo que estás viviendo
-            y recordar que no tienes que hacerlo todo sola.
+            Una hora para reconectar contigo, comprender lo que estás viviendo y
+            recordar que no tienes que hacerlo todo sola.
           </p>
         </div>
       </section>

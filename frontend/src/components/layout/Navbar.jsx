@@ -7,6 +7,7 @@ import BrandLogo from "@/components/layout/BrandLogo";
 const links = [
   { to: "/", label: "Inicio" },
   { to: "/comunidad", label: "Comunidad" },
+  { to: "/productos", label: "Productos" },
   { to: "/nosotros", label: "Nosotros" },
 ];
 
@@ -35,6 +36,7 @@ export default function Navbar() {
               key={link.to}
               to={link.to}
               end={link.to === "/"}
+              onClick={() => window.scrollTo({ top: 0, behavior: "auto" })}
               data-testid={`nav-link-${link.label.toLowerCase()}`}
               className={({ isActive }) =>
                 `text-sm transition-colors ${
@@ -57,7 +59,6 @@ export default function Navbar() {
           >
             Contacto
           </a>
-
         </div>
 
         <button
@@ -83,7 +84,10 @@ export default function Navbar() {
                 key={link.to}
                 to={link.to}
                 end={link.to === "/"}
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false);
+                  window.scrollTo({ top: 0, behavior: "auto" });
+                }}
                 data-testid={`mobile-nav-link-${link.label.toLowerCase()}`}
                 className={({ isActive }) =>
                   `text-base transition-colors ${
@@ -114,7 +118,6 @@ export default function Navbar() {
             >
               Contacto
             </a>
-
           </div>
         </div>
       )}

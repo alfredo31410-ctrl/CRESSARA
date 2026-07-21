@@ -17,22 +17,23 @@ import AvisoPrivacidad from "@/pages/legal/AvisoPrivacidad";
 import TerminosCondiciones from "@/pages/legal/TerminosCondiciones";
 import AdminLogin from "@/pages/admin/AdminLogin";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
+import Productos from "@/pages/public/Productos";
+import ScrollManager from "@/components/layout/ScrollManager";
 
 function App() {
   return (
     <div className="App">
       <AuthProvider>
         <BrowserRouter>
+          <ScrollManager />
+
           <Routes>
             {/* Sitio público */}
             <Route path="/" element={<Home />} />
             <Route path="/comunidad" element={<Comunidad />} />
             <Route path="/nosotros" element={<Nosotros />} />
-
-            <Route
-              path="/aviso-de-privacidad"
-              element={<AvisoPrivacidad />}
-            />
+            <Route path="/productos" element={<Productos />} />
+            <Route path="/aviso-de-privacidad" element={<AvisoPrivacidad />} />
 
             <Route
               path="/terminos-y-condiciones"
@@ -40,7 +41,10 @@ function App() {
             />
 
             {/* Conserva enlaces antiguos y los dirige a la oferta vigente. */}
-            <Route path="/cursos/*" element={<Navigate to="/comunidad" replace />} />
+            <Route
+              path="/cursos/*"
+              element={<Navigate to="/comunidad" replace />}
+            />
 
             {/* Administración */}
             <Route path="/admin/login" element={<AdminLogin />} />

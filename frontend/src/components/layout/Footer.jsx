@@ -41,10 +41,7 @@ export default function Footer() {
 
           <ul className="space-y-3 text-sm text-brand-muted">
             <li>
-              <Link
-                to="/"
-                className="transition-colors hover:text-brand-blue"
-              >
+              <Link to="/" className="transition-colors hover:text-brand-blue">
                 Inicio
               </Link>
             </li>
@@ -55,6 +52,15 @@ export default function Footer() {
                 className="transition-colors hover:text-brand-blue"
               >
                 Comunidad
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to="/productos"
+                className="transition-colors hover:text-brand-blue"
+              >
+                Productos
               </Link>
             </li>
 
