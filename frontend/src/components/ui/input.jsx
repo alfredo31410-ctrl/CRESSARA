@@ -1,3 +1,4 @@
+// Campo de texto base con estilos y estados uniformes.
 import * as React from "react"
 
 import { cn } from "@/lib/utils"

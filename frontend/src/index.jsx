@@ -1,3 +1,4 @@
+// Punto de entrada del frontend: monta la aplicación React en el elemento #root.
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "@/index.css";

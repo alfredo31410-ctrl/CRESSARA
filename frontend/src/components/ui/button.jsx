@@ -1,3 +1,4 @@
+// Botón base con variantes consistentes de tamaño, color y estado.
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva } from "class-variance-authority";

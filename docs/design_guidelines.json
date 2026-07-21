@@ -1,0 +1,149 @@
+{
+  "theme_and_archetype": {
+    "theme": "dark",
+    "archetype": "5 (Jewel & Luxury) mixed with Swiss Premium",
+    "description": "Dark mode elegante. Posicionamiento: Profesional, Profundo, Claro. Premium SaaS aesthetic for applied psychology and emotional education. Avoids typical 'therapy' or 'self-help' clichés. Focuses on cinematic depth, high contrast, and introspective space.",
+    "mood": "Cinematic, introspective, structured, elegant."
+  },
+  "colors": {
+    "background": {
+      "base": "#0A0A0C",
+      "surface": "#121216",
+      "surface_elevated": "#1A1A20",
+      "glass": "rgba(20, 20, 25, 0.6)"
+    },
+    "text": {
+      "primary": "#F3F4F6",
+      "secondary": "#A0A0AB",
+      "tertiary": "#6B6B78",
+      "inverse": "#0A0A0C"
+    },
+    "accents": {
+      "deep_blue": "#1D3A5F",
+      "emotional_purple": "#584266",
+      "soft_pink": "#D1A7B4"
+    },
+    "interactive": {
+      "cta_primary_bg": "#F3F4F6",
+      "cta_primary_text": "#0A0A0C",
+      "cta_secondary_bg": "transparent",
+      "cta_secondary_border": "#584266",
+      "cta_hover": "#FFFFFF",
+      "focus_ring": "#D1A7B4"
+    },
+    "rules": {
+      "usage": "Use accents (blue, purple, pink) strictly as ambient glows (blur-3xl), subtle borders, tags, or hover states. Never use them as massive solid blocks of color. The primary CTA must be high-contrast white/off-white for a premium SaaS feel.",
+      "gradients": "Avoid flat full-screen gradients. Use subtle radial gradients at the top or bottom of sections to create depth.",
+      "glassmorphism": "Use backdrop-blur-xl with a 1px border of white/10 for floating navs and sticky headers."
+    }
+  },
+  "typography": {
+    "fonts": {
+      "heading": "'Cabinet Grotesk', sans-serif",
+      "body": "'DM Sans', sans-serif",
+      "mono": "'JetBrains Mono', monospace"
+    },
+    "scales": {
+      "h1": "text-5xl md:text-6xl+ tracking-tighter leading-none font-medium",
+      "h2": "text-3xl md:text-4xl tracking-tight leading-none font-medium",
+      "h3": "text-xl md:text-2xl tracking-tight leading-snug font-medium",
+      "body_lg": "text-lg leading-relaxed text-secondary",
+      "body": "text-base leading-relaxed text-secondary",
+      "overline": "text-xs tracking-[0.2em] uppercase font-bold text-accent-soft_pink"
+    },
+    "rules": {
+      "headings": "Never use Inter for headings. Use Cabinet Grotesk with tight letter spacing (tracking-tight).",
+      "alignment": "Prioritize left-alignment for dense content and text. Center-alignment only for Hero H1 or specific symmetrical breaks.",
+      "contrast": "Ensure body text is strictly #A0A0AB or #F3F4F6 to meet APCA contrast ratios against the #0A0A0C background."
+    }
+  },
+  "spacing_and_layout": {
+    "containers": {
+      "padding_global": "px-6 md:px-12 lg:px-24",
+      "section_gap": "py-24 md:py-32"
+    },
+    "grids": {
+      "marketing_bento": "grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-6 md:gap-8",
+      "dashboard_control": "grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6",
+      "courses_grid": "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+    },
+    "rules": {
+      "borders": "Containers with borders MUST have internal padding (p-6 or p-8) to prevent text collision. Max border radius is rounded-xl.",
+      "hero_height": "min-h-[85vh] flex flex-col justify-center",
+      "dashboard": "Every pixel must be utilized. Use h-full on children. Keep borders to 1px solid white/10."
+    }
+  },
+  "components": {
+    "hero": {
+      "style": "Cinematic. Use abstract dark emotion image with a bg-gradient-to-t from-[#0A0A0C] via-[#0A0A0C]/80 to-transparent overlay. Large typography, high-contrast primary CTA button.",
+      "cta": "Rounded-full px-8 py-3 bg-white text-black font-medium hover:scale-105 transition-transform"
+    },
+    "navigation": {
+      "style": "Crystal Glass variant. Sticky top, z-50. bg-[#0A0A0C]/60 backdrop-blur-xl border-b border-white/5.",
+      "layout": "Flex container. Logo left, Links center (hidden on mobile), CTA right. Use Lucide-react for hamburger menu."
+    },
+    "cards_marketing": {
+      "style": "Bento 'Tetris' Grid. Background #121216, border 1px solid white/5. Use subtle radial glows inside the card on hover using the accent colors (blue/purple/pink)."
+    },
+    "cards_dashboard": {
+      "style": "Flat background (#121216), 1px subtle border (border-white/10), no shadow. On hover: slight lift (-translate-y-1) and border color darkens to accent-blue."
+    },
+    "forms_and_inputs": {
+      "style": "Shadcn UI heavily customized. bg-transparent, border-white/10, text-primary. Focus state: ring-1 ring-accent-soft_pink border-accent-soft_pink."
+    },
+    "marquee": {
+      "style": "Editorial Ribbon. Extremely slow scroll. uppercase tracking-[0.2em] text-xs text-brand-text/30. Use to display philosophies or keywords (Entender. Sanar. Construir. Decidir.)."
+    }
+  },
+  "interactions_and_motion": {
+    "hover_states": "All interactive elements MUST explicitly set text color on hover. Buttons should have a subtle scale or brightness shift.",
+    "page_transitions": "Fade-in entrance animations for major sections (framer-motion, initial={{opacity:0, y:20}}).",
+    "micro_interactions": "Use staggered entrance for the courses grid. Subtle skeleton loading states for Dashboard data fetching."
+  },
+  "images_and_media": {
+    "hero_background": {
+      "url": "https://images.pexels.com/photos/31103737/pexels-photo-31103737.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Abstract reflection of light on a dark, textured surface with an artistic feel.",
+      "placement": "Home page hero section background (requires heavy dark overlay)"
+    },
+    "focus_women": {
+      "url": "https://images.unsplash.com/photo-1740801505683-9391efb89106?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHwzfHxsYXRpbiUyMHdvbWFuJTIwcG9ydHJhaXQlMjBkYXJrJTIwbW9vZHxlbnwwfHx8fDE3NzczOTgwMDl8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Woman looks up with a dark background.",
+      "placement": "Image for the 'Mujeres' focus card/section on Home page"
+    },
+    "focus_men": {
+      "url": "https://images.pexels.com/photos/3140071/pexels-photo-3140071.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "A contemplative young man stands in a shadowy indoor environment, evoking a moody and introspective atmosphere.",
+      "placement": "Image for the 'Hombres' focus card/section on Home page"
+    },
+    "focus_relationships": {
+      "url": "https://images.pexels.com/photos/8272144/pexels-photo-8272144.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "An intimate moment of a couple in dark lighting.",
+      "placement": "Image for the 'Relaciones' focus card/section on Home page"
+    },
+    "course_thumbnail_1": {
+      "url": "https://images.pexels.com/photos/9845603/pexels-photo-9845603.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "A cozy workspace with a glowing laptop and stacked books, perfect for night-time productivity.",
+      "placement": "Course thumbnail placeholder for Catalog"
+    },
+    "course_thumbnail_2": {
+      "url": "https://images.unsplash.com/photo-1548393488-ae8f117cbc1c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjd8MHwxfHNlYXJjaHwxfHxkYXJrJTIwbW9vZCUyMHN0dWR5aW5nJTIwbGFwdG9wfGVufDB8fHx8MTc3NzM5Nzk5OHww&ixlib=rb-4.1.0&q=85",
+      "description": "laptop turned on in dark room",
+      "placement": "Course thumbnail placeholder for Catalog"
+    },
+    "about_us_image": {
+      "url": "https://images.pexels.com/photos/32911550/pexels-photo-32911550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Hands creating an artistic light effect with rainbow colors in a dark setting.",
+      "placement": "About us philosophy / mission visual"
+    }
+  },
+  "instructions_to_main_agent": [
+    "INSTALL FONTS: Ensure you import 'Cabinet Grotesk' from Fontshare or similar via standard @font-face, and 'DM Sans' from Google Fonts.",
+    "ICONS: Install and use `lucide-react` for standard icons, but prefer `@phosphor-icons/react` for high-end duotone icons if possible.",
+    "COMPONENT STRATEGY: Build the marketing Home and About pages using raw Tailwind CSS (divs, sections) for maximum creative freedom, bento layouts, and asymmetry. DO NOT force Shadcn cards here.",
+    "DASHBOARD & CATALOG: Use Shadcn UI primitives for the Admin dashboard (Tables, Forms, Dialogs) and the Courses catalog filters.",
+    "ACCESSIBILITY: All interactive elements MUST include a `data-testid` attribute (e.g., data-testid='explore-courses-button').",
+    "ROUTING: Ensure standard React Router setup with routes for /, /cursos, /cursos/:id, /nosotros, /admin/login, /admin/dashboard.",
+    "STYLES: Do not use arbitrary heavy gradients. Stick to the defined dark palette (#0A0A0C bg). Use accent colors strictly for glowing effects, subtle 1px borders, and hover states. Maintain a high-contrast premium SaaS look."
+  ]
+}

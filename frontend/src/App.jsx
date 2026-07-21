@@ -1,18 +1,22 @@
+/**
+ * Composición principal de la aplicación.
+ * Reúne el estado de autenticación, las rutas y las notificaciones globales.
+ */
 import React from "react";
 import "@/App.css";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
-import { AuthProvider } from "@/context/AuthContext";
-import ProtectedRoute from "@/components/ProtectedRoute";
+import { AuthProvider } from "@/features/auth/AuthContext";
+import ProtectedRoute from "@/features/auth/ProtectedRoute";
 
-import Home from "@/pages/Home";
-import Comunidad from "@/pages/Comunidad";
-import Nosotros from "@/pages/Nosotros";
-import AvisoPrivacidad from "@/pages/AvisoPrivacidad";
-import TerminosCondiciones from "@/pages/TerminosCondiciones";
-import AdminLogin from "@/pages/AdminLogin";
-import AdminDashboard from "@/pages/AdminDashboard";
-import NotFound from "@/pages/NotFound";
+import Home from "@/pages/public/Home";
+import Comunidad from "@/pages/public/Comunidad";
+import Nosotros from "@/pages/public/Nosotros";
+import NotFound from "@/pages/public/NotFound";
+import AvisoPrivacidad from "@/pages/legal/AvisoPrivacidad";
+import TerminosCondiciones from "@/pages/legal/TerminosCondiciones";
+import AdminLogin from "@/pages/admin/AdminLogin";
+import AdminDashboard from "@/pages/admin/AdminDashboard";
 
 function App() {
   return (
@@ -20,6 +24,7 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
+            {/* Sitio público */}
             <Route path="/" element={<Home />} />
             <Route path="/comunidad" element={<Comunidad />} />
             <Route path="/nosotros" element={<Nosotros />} />
@@ -34,16 +39,10 @@ function App() {
               element={<TerminosCondiciones />}
             />
 
-            <Route
-              path="/cursos"
-              element={<Navigate to="/comunidad" replace />}
-            />
+            {/* Conserva enlaces antiguos y los dirige a la oferta vigente. */}
+            <Route path="/cursos/*" element={<Navigate to="/comunidad" replace />} />
 
-            <Route
-              path="/cursos/:id"
-              element={<Navigate to="/comunidad" replace />}
-            />
-
+            {/* Administración */}
             <Route path="/admin/login" element={<AdminLogin />} />
 
             <Route
@@ -55,6 +54,7 @@ function App() {
               }
             />
 
+            {/* Cualquier dirección desconocida muestra una página 404. */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

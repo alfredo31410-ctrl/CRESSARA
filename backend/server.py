@@ -17,13 +17,13 @@ from pymongo.errors import PyMongoError, ServerSelectionTimeoutError
 from pydantic import BaseModel, EmailStr
 
 
-# -------------------- Environment --------------------
+# -------------------- Configuración del entorno --------------------
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / ".env")
 
 
 def env(name: str, default: Optional[str] = None, *, required: bool = False) -> str:
-    """Read environment values with production-friendly error messages."""
+    """Lee una variable de entorno y genera un error claro si es obligatoria."""
     value = os.environ.get(name, default)
     if required and not value:
         raise RuntimeError(
@@ -59,15 +59,15 @@ def config_errors() -> List[str]:
     return errors
 
 
-# -------------------- DB --------------------
-# Keep imports healthy even before production variables are configured.
-# Actual API requests validate configuration before using the database.
+# -------------------- Base de datos --------------------
+# Se crea un cliente local provisional para que el módulo pueda importarse.
+# Antes de atender datos reales, cada ruta valida la configuración de producción.
 client = AsyncIOMotorClient(MONGO_URL or "mongodb://localhost:27017", serverSelectionTimeoutMS=MONGO_TIMEOUT_MS)
 db = client[DB_NAME]
 
 
 async def ping_database() -> None:
-    """Verify that MongoDB is reachable before the app serves traffic."""
+    """Comprueba que MongoDB responda antes de atender tráfico dependiente de datos."""
     try:
         await client.admin.command("ping")
     except ServerSelectionTimeoutError as exc:
@@ -78,7 +78,7 @@ async def ping_database() -> None:
         raise RuntimeError("MongoDB connection failed") from exc
 
 
-# -------------------- App --------------------
+# -------------------- Aplicación FastAPI --------------------
 app = FastAPI(title="CRESARA API")
 api_router = APIRouter()
 
@@ -89,7 +89,7 @@ db_ready = False
 
 
 async def ensure_database_ready() -> None:
-    """Initialize Mongo indexes and seed data on cold starts/serverless requests."""
+    """Prepara índices y datos iniciales una sola vez por instancia del servicio."""
     global db_ready
     if db_ready:
         return
@@ -121,7 +121,7 @@ async def ensure_db_before_api_requests(request: Request, call_next):
     return await call_next(request)
 
 
-# -------------------- Auth utils --------------------
+# -------------------- Utilidades de autenticación --------------------
 JWT_ALGORITHM = "HS256"
 ACCESS_TTL_MIN = 60 * 24  # 24 hours
 
@@ -147,8 +147,8 @@ def create_access_token(user_id: str, email: str) -> str:
     return jwt.encode(payload, get_jwt_secret(), algorithm=JWT_ALGORITHM)
 
 def set_auth_cookie(response: Response, token: str) -> None:
-    # Cross-site auth cookies require SameSite=None and Secure=true in production.
-    # Local HTTP development is easier with SameSite=Lax and COOKIE_SECURE=false.
+    # Una cookie entre sitios requiere SameSite=None y Secure=true en producción.
+    # En desarrollo HTTP local se utiliza SameSite=Lax y COOKIE_SECURE=false.
     response.set_cookie(
         key="access_token",
         value=token,
@@ -185,7 +185,7 @@ async def get_current_user(request: Request) -> dict:
         raise HTTPException(status_code=401, detail="Token inválido")
 
 
-# -------------------- Models --------------------
+# -------------------- Modelos de datos --------------------
 class LoginRequest(BaseModel):
     email: EmailStr
     password: str
@@ -228,7 +228,7 @@ class Course(CourseBase):
     updated_at: datetime
 
 
-# -------------------- Auth endpoints --------------------
+# -------------------- Endpoints de autenticación --------------------
 @api_router.post("/auth/login", response_model=UserPublic)
 async def login(payload: LoginRequest, response: Response):
     await sync_admin_user()
@@ -255,7 +255,7 @@ async def logout(response: Response):
     return {"ok": True}
 
 
-# -------------------- Course endpoints --------------------
+# -------------------- Endpoints de cursos --------------------
 def serialize_course(doc: dict) -> dict:
     doc.pop("_id", None)
     for k in ("created_at", "updated_at"):
@@ -352,7 +352,7 @@ async def health_db():
         raise HTTPException(status_code=503, detail="Database unavailable")
 
 
-# -------------------- Seed --------------------
+# -------------------- Datos iniciales --------------------
 SAMPLE_COURSES = [
     # Mujeres
     {
@@ -509,13 +509,13 @@ async def shutdown_db_client():
     client.close()
 
 
-# Include router. Local/dev uses /api. Vercel can also expose unprefixed routes
-# if its service router strips the /api routePrefix before reaching FastAPI.
+# En local se usa /api. Vercel también puede exponer rutas sin prefijo porque
+# su enrutador consume /api antes de entregar la petición a FastAPI.
 app.include_router(api_router, prefix="/api")
 if env("ENABLE_UNPREFIXED_API", "false").lower() == "true":
     app.include_router(api_router)
 
-# CORS
+# CORS: limita qué sitios pueden realizar peticiones con credenciales.
 app.add_middleware(
     CORSMiddleware,
     allow_origin_regex=".*" if CORS_ORIGINS == ["*"] else None,

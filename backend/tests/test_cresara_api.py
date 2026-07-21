@@ -1,4 +1,4 @@
-"""CRESARA backend API tests - auth, courses CRUD, health."""
+"""Pruebas de salud, autenticación y administración de cursos de la API."""
 import os
 import pytest
 import requests
@@ -28,7 +28,7 @@ def auth_client():
     return s
 
 
-# -------------------- Health --------------------
+# -------------------- Estado del servicio --------------------
 class TestHealth:
     def test_health_ok(self, public_client):
         r = public_client.get(f"{API}/health", timeout=10)
@@ -38,7 +38,7 @@ class TestHealth:
         assert data.get("service") == "cresara"
 
 
-# -------------------- Auth --------------------
+# -------------------- Autenticación --------------------
 class TestAuth:
     def test_login_success_sets_cookie(self, public_client):
         s = requests.Session()
@@ -48,9 +48,9 @@ class TestAuth:
         assert body["email"] == ADMIN_EMAIL
         assert body["role"] == "admin"
         assert "id" in body and isinstance(body["id"], str)
-        # Cookie set
+        # El inicio de sesión debe crear la cookie.
         assert "access_token" in s.cookies
-        # Cookie attributes - verify httpOnly & Secure in Set-Cookie header
+        # Comprueba los atributos httpOnly y Secure en la cabecera Set-Cookie.
         set_cookie = r.headers.get("set-cookie", "").lower()
         assert "httponly" in set_cookie, f"httpOnly missing: {set_cookie}"
         assert "secure" in set_cookie, f"Secure missing: {set_cookie}"
@@ -76,7 +76,7 @@ class TestAuth:
         assert data["role"] == "admin"
 
 
-# -------------------- Courses (public) --------------------
+# -------------------- Cursos públicos --------------------
 class TestCoursesPublic:
     def test_list_courses_seeded(self, public_client):
         r = public_client.get(f"{API}/courses", timeout=15)
@@ -84,7 +84,7 @@ class TestCoursesPublic:
         items = r.json()
         assert isinstance(items, list)
         assert len(items) >= 9, f"Expected at least 9 seeded courses, got {len(items)}"
-        # Validate shape
+        # Comprueba la estructura pública del curso.
         c = items[0]
         for f in ("id", "title", "description", "category", "featured", "created_at", "updated_at"):
             assert f in c
@@ -119,7 +119,7 @@ class TestCoursesPublic:
         assert r.status_code == 404
 
 
-# -------------------- Courses (auth) CRUD --------------------
+# -------------------- Administración autenticada de cursos --------------------
 class TestCoursesCRUD:
     created_id = None
 
@@ -159,7 +159,7 @@ class TestCoursesCRUD:
         assert "id" in data
         TestCoursesCRUD.created_id = data["id"]
 
-        # Verify persistence via public GET
+        # Comprueba la persistencia mediante la consulta pública.
         r2 = requests.get(f"{API}/courses/{data['id']}", timeout=10)
         assert r2.status_code == 200
         assert r2.json()["title"] == payload["title"]
@@ -172,7 +172,7 @@ class TestCoursesCRUD:
         d = r.json()
         assert d["featured"] is True
         assert d["title"] == "TEST_Curso Updated"
-        # Verify persistence
+        # Comprueba que la actualización quedó guardada.
         r2 = requests.get(f"{API}/courses/{cid}", timeout=10)
         assert r2.status_code == 200
         assert r2.json()["featured"] is True
@@ -187,7 +187,7 @@ class TestCoursesCRUD:
         cid = TestCoursesCRUD.created_id
         r = auth_client.delete(f"{API}/courses/{cid}", timeout=10)
         assert r.status_code == 200
-        # Verify gone
+        # Comprueba que el curso ya no existe.
         r2 = requests.get(f"{API}/courses/{cid}", timeout=10)
         assert r2.status_code == 404
 
@@ -196,7 +196,7 @@ class TestCoursesCRUD:
         assert r.status_code == 404
 
 
-# -------------------- Logout --------------------
+# -------------------- Cierre de sesión --------------------
 class TestLogout:
     def test_logout_clears_cookie(self):
         s = requests.Session()
@@ -204,7 +204,7 @@ class TestLogout:
         assert r.status_code == 200
         r2 = s.post(f"{API}/auth/logout", timeout=10)
         assert r2.status_code == 200
-        # After logout, session's access_token cookie should be cleared
-        # Do auth/me with fresh session (no cookie) -> 401 confirms server side independent
+        # Después de salir, la cookie access_token debe quedar eliminada.
+        # Una sesión nueva sin cookie debe recibir 401 en /auth/me.
         s3 = requests.Session()
         assert s3.get(f"{API}/auth/me", timeout=10).status_code == 401

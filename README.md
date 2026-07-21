@@ -2,13 +2,19 @@
 
 Plataforma de educacion emocional aplicada con frontend en React y backend en FastAPI.
 
-## Carpetas Principales
+## Estructura
 
-- `frontend/`: aplicacion publica y panel de administracion.
-- `backend/`: API, autenticacion, cursos y seed inicial de administrador.
-- `DATABASE.md`: guia para conectar MongoDB Atlas y verificar la base de datos.
-- `api/`: entrypoint serverless para exponer FastAPI en Vercel.
-- `DEPLOYMENT.md`: guia para configurar produccion, Vercel y variables de entorno.
+- `frontend/`: aplicación React construida con Vite.
+  - `src/pages/`: páginas públicas, legales y administrativas.
+  - `src/components/`: componentes de layout, contenido y UI reutilizable.
+  - `src/features/`: lógica agrupada por funcionalidad, como autenticación.
+  - `src/services/`: acceso a la API y servicios externos.
+- `backend/`: API FastAPI, autenticación, cursos y datos iniciales.
+- `api/`: punto de entrada serverless para exponer FastAPI en Vercel.
+- `docs/`: arquitectura, base de datos, despliegue y lineamientos visuales.
+
+La responsabilidad de cada carpeta y archivo está explicada en
+[`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md).
 
 ## Configuracion
 
@@ -35,4 +41,4 @@ cd CRESARA/backend
 uvicorn server:app --reload --host 0.0.0.0 --port 8000
 ```
 
-Para produccion y Vercel, revisa `DEPLOYMENT.md`.
+Para producción y Vercel, revisa [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).

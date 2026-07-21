@@ -1,3 +1,4 @@
+// Diálogo modal para confirmar acciones que pueden tener consecuencias.
 import * as React from "react"
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog"
 

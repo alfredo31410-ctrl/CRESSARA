@@ -1,3 +1,4 @@
+// Etiqueta visual pequeña para estados y categorías.
 import * as React from "react"
 import { cva } from "class-variance-authority";
 

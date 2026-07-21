@@ -1,3 +1,4 @@
+// Primitivas para construir tablas con estructura y estilos consistentes.
 import * as React from "react"
 
 import { cn } from "@/lib/utils"

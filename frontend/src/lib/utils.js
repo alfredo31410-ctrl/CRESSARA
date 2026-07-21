@@ -1,3 +1,4 @@
+// Une clases condicionales y resuelve conflictos entre utilidades de Tailwind.
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge"
 
