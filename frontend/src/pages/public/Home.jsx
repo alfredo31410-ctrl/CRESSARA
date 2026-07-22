@@ -21,6 +21,7 @@ import {
   CONTACT_EMAIL,
   WHATSAPP_URL,
 } from "@/services/contact";
+import Reveal from "@/components/motion/Reveal";
 
 const HOTMART_URL =
   "https://pay.hotmart.com/W106231401S?off=lc9k824d&checkoutMode=10&bid=1783099219778";
@@ -101,7 +102,7 @@ export default function Home() {
           <img
             src="https://images.pexels.com/photos/31103737/pexels-photo-31103737.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1600"
             alt=""
-            className="h-full w-full object-cover opacity-50"
+            className="hero-background absolute inset-0 h-full w-full object-cover opacity-50"
           />
 
           <div className="absolute inset-0 bg-gradient-to-t from-[#4A263A]/90 via-[#6B2E59]/65 to-[#6B2E59]/25" />
@@ -111,44 +112,52 @@ export default function Home() {
         </div>
 
         <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-24 pt-40 md:px-12">
-          <div className="max-w-3xl animate-fade-up">
-            <p className="overline mb-6 text-[#ffffff]">
-              Educación emocional aplicada
-            </p>
-            <h1 className="font-heading text-balance text-5xl font-bold leading-[0.95] tracking-tighter text-white md:text-7xl lg:text-[5.5rem]">
-              <span className="text-brand-pink">Entender</span> lo que sientes…{" "}
-              <br />
-              <span className="text-brand-pink">para decidir mejor</span>
-              <br />
-              cómo vivir.
-            </h1>
+          <div className="max-w-3xl">
+            <Reveal delay={80} distance={16}>
+              <p className="overline mb-6 text-white">
+                Educación emocional aplicada
+              </p>
+            </Reveal>
+            <Reveal delay={180} distance={32}>
+              <h1 className="font-heading text-balance text-5xl font-bold leading-[0.95] tracking-tighter text-white md:text-7xl lg:text-[5.5rem]">
+                <span className="text-brand-pink">Entender</span> lo que
+                sientes… <br />
+                <span className="text-brand-pink">para decidir mejor</span>
+                <br />
+                cómo vivir.
+              </h1>
+            </Reveal>
 
-            <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/85 md:text-xl">
-              No es terapia. No es motivación. Es psicología real, aplicada a la
-              vida real.
-            </p>
+            <Reveal delay={320} distance={24}>
+              <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/85 md:text-xl">
+                No es terapia. No es motivación. Es psicología real, aplicada a
+                la vida real.
+              </p>
+            </Reveal>
 
-            <div className="mt-10 flex flex-wrap items-center gap-4">
-              <Link
-                to="/comunidad"
-                data-testid="hero-community-btn"
-                className="group inline-flex items-center gap-2 rounded-full bg-brand-blue px-7 py-3.5 text-sm font-medium text-white shadow-[0_0_35px_-14px_rgba(161,82,186,0.95)] transition-colors duration-300 hover:bg-brand-pink"
-              >
-                Conoce la comunidad
-                <ArrowRight
-                  size={16}
-                  className="transition-transform group-hover:translate-x-1"
-                />
-              </Link>
+            <Reveal delay={440} distance={20}>
+              <div className="mt-10 flex flex-wrap items-center gap-4">
+                <Link
+                  to="/comunidad"
+                  data-testid="hero-community-btn"
+                  className="group inline-flex items-center gap-2 rounded-full bg-brand-blue px-7 py-3.5 text-sm font-medium text-white shadow-[0_0_35px_-14px_rgba(161,82,186,0.95)] transition-colors duration-300 hover:bg-brand-pink"
+                >
+                  Conoce la comunidad
+                  <ArrowRight
+                    size={16}
+                    className="transition-transform group-hover:translate-x-1"
+                  />
+                </Link>
 
-              <Link
-                to="/nosotros"
-                data-testid="hero-about-link"
-                className="inline-flex items-center gap-2 rounded-full border border-brand-lavender/60 px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white/10"
-              >
-                Conocer CRESSARA
-              </Link>
-            </div>
+                <Link
+                  to="/nosotros"
+                  data-testid="hero-about-link"
+                  className="inline-flex items-center gap-2 rounded-full border border-brand-lavender/60 px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white/10"
+                >
+                  Conocer CRESSARA
+                </Link>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -177,11 +186,11 @@ export default function Home() {
       {/* QUÉ ES CRESARA */}
       <section className="mx-auto max-w-7xl px-6 py-24 md:px-12 md:py-32">
         <div className="grid gap-12 md:grid-cols-12 md:gap-16">
-          <div className="animate-fade-up md:col-span-4">
+          <Reveal className="md:col-span-4" distance={20}>
             <p className="overline mb-6">Qué es CRESARA</p>
-          </div>
+          </Reveal>
 
-          <div className="animate-fade-up md:col-span-8 [animation-delay:120ms]">
+          <Reveal delay={120} className="md:col-span-8" distance={32}>
             <h2 className="font-heading text-balance text-3xl font-medium leading-tight tracking-tight text-brand-ink md:text-5xl">
               Una comunidad para entender emociones, sanar patrones, construir
               relaciones sanas y tomar decisiones con dirección.
@@ -218,13 +227,13 @@ export default function Home() {
                 </p>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* VIDEOS DE LA COMUNIDAD */}
       <section className="mx-auto max-w-7xl px-6 pb-24 md:px-12 md:pb-32">
-        <div className="mb-12 flex flex-col gap-5 md:mb-16">
+        <Reveal className="mb-12 flex flex-col gap-5 md:mb-16">
           <div>
             <p className="overline mb-4">Comunidad Cressara</p>
 
@@ -237,15 +246,17 @@ export default function Home() {
             Un espacio para detenerte un momento, comprender lo que estás
             viviendo y recordar que tú también importas.
           </p>
-        </div>
+        </Reveal>
 
         <div className="grid gap-6 md:grid-cols-3">
           {VIDEOS.map((video, index) => (
-            <article
+            <Reveal
+              as="article"
               key={video.id}
+              delay={index * 100}
+              distance={34}
               data-testid={`community-video-${index + 1}`}
-              className="group animate-fade-up overflow-hidden rounded-2xl border border-brand-pink/25 bg-white/90 shadow-[0_22px_50px_-34px_rgba(161,82,186,0.72)] transition-all duration-500 hover:-translate-y-2 hover:border-brand-pink/55 hover:shadow-[0_28px_60px_-34px_rgba(161,82,186,0.9)]"
-              style={{ animationDelay: `${index * 100}ms` }}
+              className="group overflow-hidden rounded-2xl border border-brand-pink/25 bg-white/90 shadow-[0_22px_50px_-34px_rgba(161,82,186,0.72)] transition-all duration-500 hover:-translate-y-2 hover:border-brand-pink/55 hover:shadow-[0_28px_60px_-34px_rgba(161,82,186,0.9)]"
             >
               <VideoPreview video={video} />
 
@@ -268,7 +279,7 @@ export default function Home() {
                   <ArrowUpRight size={16} />
                 </a>
               </div>
-            </article>
+            </Reveal>
           ))}
         </div>
         <div className="mt-10 flex justify-center">
@@ -286,7 +297,7 @@ export default function Home() {
 
       {/* FORMAS DE COMENZAR */}
       <section className="mx-auto max-w-7xl px-6 pb-24 md:px-12 md:pb-32">
-        <div className="mx-auto mb-12 max-w-3xl text-center">
+        <Reveal className="mx-auto mb-12 max-w-3xl text-center">
           <p className="overline mb-4">Elige tu punto de partida</p>
 
           <h2 className="font-heading text-balance text-4xl font-medium tracking-tighter text-brand-ink md:text-6xl">
@@ -297,95 +308,89 @@ export default function Home() {
             Puedes recibir acompañamiento continuo o comenzar con una
             herramienta para avanzar a tu propio ritmo.
           </p>
-        </div>
+        </Reveal>
 
         <div className="grid gap-6 md:grid-cols-2">
           {/* Membresía mensual */}
-          <article className="group flex flex-col rounded-3xl border border-brand-blue/25 bg-white/75 p-8 shadow-[0_22px_50px_-36px_rgba(161,82,186,0.75)] transition-all duration-500 hover:-translate-y-2 hover:border-brand-blue/60 hover:bg-white hover:shadow-[0_30px_65px_-34px_rgba(161,82,186,0.8)] md:p-10">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-blue/10 text-brand-blue transition-transform duration-300 group-hover:scale-110">
-              <Heart size={23} aria-hidden="true" />
-            </div>
-
-            <p className="overline mt-8">Membresía mensual</p>
-
-            <h3 className="mt-3 font-heading text-3xl font-bold tracking-tighter text-brand-ink md:text-4xl">
-              Quiero acompañamiento continuo
-            </h3>
-
-            <p className="mt-5 leading-relaxed text-brand-muted">
-              Forma parte de Cressara Club y recibe encuentros, reflexiones,
-              actividades y acompañamiento mes a mes.
-            </p>
-
-            <div className="mt-7">
-              <p className="font-heading text-4xl font-bold tracking-tighter text-brand-ink">
-                $197
-                <span className="ml-2 text-base font-medium tracking-normal text-brand-muted">
-                  MXN al mes
-                </span>
+          <Reveal delay={100} distance={36} className="h-full">
+            <article className="group flex h-full flex-col rounded-3xl border border-brand-blue/25 bg-white/75 p-8 shadow-[0_22px_50px_-36px_rgba(161,82,186,0.75)] transition-all duration-500 hover:-translate-y-2 hover:border-brand-blue/60 hover:bg-white hover:shadow-[0_30px_65px_-34px_rgba(161,82,186,0.8)] md:p-10">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-blue/10 text-brand-blue transition-transform duration-300 group-hover:scale-110">
+                <Heart size={23} aria-hidden="true" />
+              </div>
+              <p className="overline mt-8">Membresía mensual</p>
+              <h3 className="mt-3 font-heading text-3xl font-bold tracking-tighter text-brand-ink md:text-4xl">
+                Quiero acompañamiento continuo
+              </h3>
+              <p className="mt-5 leading-relaxed text-brand-muted">
+                Forma parte de Cressara Club y recibe encuentros, reflexiones,
+                actividades y acompañamiento mes a mes.
               </p>
-            </div>
-
-            <div className="mt-auto pt-8">
-              <Link
-                to="/comunidad"
-                className="inline-flex items-center gap-2 rounded-full bg-brand-blue px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-brand-pink"
-              >
-                Conocer la membresía
-                <ArrowRight
-                  size={17}
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                />
-              </Link>
-            </div>
-          </article>
+              <div className="mt-7">
+                <p className="font-heading text-4xl font-bold tracking-tighter text-brand-ink">
+                  $197
+                  <span className="ml-2 text-base font-medium tracking-normal text-brand-muted">
+                    MXN al mes
+                  </span>
+                </p>
+              </div>
+              <div className="mt-auto pt-8">
+                <Link
+                  to="/comunidad"
+                  className="inline-flex items-center gap-2 rounded-full bg-brand-blue px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-brand-pink"
+                >
+                  Conocer la membresía
+                  <ArrowRight
+                    size={17}
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                  />
+                </Link>
+              </div>
+            </article>
+          </Reveal>
 
           {/* Ebook independiente */}
-          <article className="group flex flex-col rounded-3xl border border-brand-pink/30 bg-white/75 p-8 shadow-[0_22px_50px_-36px_rgba(255,122,172,0.75)] transition-all duration-500 hover:-translate-y-2 hover:border-brand-pink/65 hover:bg-white hover:shadow-[0_30px_65px_-34px_rgba(255,122,172,0.85)] md:p-10">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-pink/10 text-brand-pink transition-transform duration-300 group-hover:scale-110">
-              <BookOpen size={23} aria-hidden="true" />
-            </div>
-
-            <p className="overline mt-8">Ebook · Compra única</p>
-
-            <h3 className="mt-3 font-heading text-3xl font-bold tracking-tighter text-brand-ink md:text-4xl">
-              Quiero avanzar a mi ritmo
-            </h3>
-
-            <p className="mt-5 leading-relaxed text-brand-muted">
-              Comienza con “Un espacio para volver a ti”, una guía digital con
-              reflexiones y ejercicios prácticos para reconectar contigo.
-            </p>
-
-            <div className="mt-7">
-              <p className="font-heading text-4xl font-bold tracking-tighter text-brand-ink">
-                $57
-                <span className="ml-2 text-base font-medium tracking-normal text-brand-muted">
-                  MXN · Pago único
-                </span>
+          <Reveal delay={240} distance={36} className="h-full">
+            <article className="group flex h-full flex-col rounded-3xl border border-brand-pink/30 bg-white/75 p-8 shadow-[0_22px_50px_-36px_rgba(255,122,172,0.75)] transition-all duration-500 hover:-translate-y-2 hover:border-brand-pink/65 hover:bg-white hover:shadow-[0_30px_65px_-34px_rgba(255,122,172,0.85)] md:p-10">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-pink/10 text-brand-pink transition-transform duration-300 group-hover:scale-110">
+                <BookOpen size={23} aria-hidden="true" />
+              </div>
+              <p className="overline mt-8">Ebook · Compra única</p>
+              <h3 className="mt-3 font-heading text-3xl font-bold tracking-tighter text-brand-ink md:text-4xl">
+                Quiero avanzar a mi ritmo
+              </h3>
+              <p className="mt-5 leading-relaxed text-brand-muted">
+                Comienza con “Un espacio para volver a ti”, una guía digital con
+                reflexiones y ejercicios prácticos para reconectar contigo.
               </p>
-            </div>
-
-            <div className="mt-auto pt-8">
-              <Link
-                to="/productos"
-                className="inline-flex items-center gap-2 rounded-full bg-brand-pink px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-brand-blue"
-              >
-                Conocer el ebook
-                <ArrowRight
-                  size={17}
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                />
-              </Link>
-            </div>
-          </article>
+              <div className="mt-7">
+                <p className="font-heading text-4xl font-bold tracking-tighter text-brand-ink">
+                  $57
+                  <span className="ml-2 text-base font-medium tracking-normal text-brand-muted">
+                    MXN · Pago único
+                  </span>
+                </p>
+              </div>
+              <div className="mt-auto pt-8">
+                <Link
+                  to="/productos"
+                  className="inline-flex items-center gap-2 rounded-full bg-brand-pink px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-brand-blue"
+                >
+                  Conocer el ebook
+                  <ArrowRight
+                    size={17}
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                  />
+                </Link>
+              </div>
+            </article>
+          </Reveal>
         </div>
       </section>
 
       {/* BENEFICIOS */}
       <section className="mx-auto max-w-7xl px-6 pb-24 md:px-12 md:pb-32">
         <div className="grid gap-12 md:grid-cols-12">
-          <div className="md:col-span-4">
+          <Reveal className="md:col-span-4" distance={24}>
             <p className="overline mb-6">Vuelve a ti</p>
 
             <h2 className="font-heading text-balance text-3xl font-medium leading-tight tracking-tighter text-brand-ink md:text-5xl">
@@ -396,15 +401,16 @@ export default function Home() {
               Un proceso mensual para acompañarte a recuperar claridad, voz
               propia y espacio para ti.
             </p>
-          </div>
+          </Reveal>
 
           <div className="grid gap-6 md:col-span-8 md:grid-cols-2 lg:grid-cols-3">
             {BENEFITS.map(({ icon: Icon, title, desc }, index) => (
-              <div
+              <Reveal
                 key={title}
+                delay={index * 80}
+                distance={30}
                 data-testid={`benefit-card-${index}`}
-                className="animate-fade-up rounded-xl border border-brand-pink/25 bg-white/85 p-7 shadow-[0_18px_40px_-32px_rgba(161,82,186,0.55)] transition-all duration-500 hover:-translate-y-1.5 hover:border-brand-pink/55 hover:shadow-[0_22px_44px_-30px_rgba(161,82,186,0.75)]"
-                style={{ animationDelay: `${index * 80}ms` }}
+                className="rounded-xl border border-brand-pink/25 bg-white/85 p-7 shadow-[0_18px_40px_-32px_rgba(161,82,186,0.55)] transition-all duration-500 hover:-translate-y-1.5 hover:border-brand-pink/55 hover:shadow-[0_22px_44px_-30px_rgba(161,82,186,0.75)]"
               >
                 <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-full border border-brand-pink/20 bg-brand-pink/10">
                   <Icon size={18} className="text-brand-pink" />
@@ -417,7 +423,7 @@ export default function Home() {
                 <p className="text-sm leading-relaxed text-brand-muted">
                   {desc}
                 </p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -476,9 +482,10 @@ export default function Home() {
 
       {/* Llamado final a conocer la comunidad */}
       <section className="mx-auto max-w-7xl px-6 pb-24 md:px-12 md:pb-32">
-        <div
+        <Reveal
           id="cressara-club-home"
-          className="relative animate-fade-up overflow-hidden rounded-2xl border border-brand-pink/35 bg-[#6B2E59] p-10 shadow-[0_26px_70px_-45px_rgba(91,39,75,0.95)] transition-transform duration-700 hover:-translate-y-1 md:p-20"
+          distance={38}
+          className="relative overflow-hidden rounded-2xl border border-brand-pink/35 bg-[#6B2E59] p-10 shadow-[0_26px_70px_-45px_rgba(91,39,75,0.95)] transition-all duration-700 hover:-translate-y-1 hover:border-brand-pink/55 hover:shadow-[0_32px_80px_-44px_rgba(91,39,75,1)] md:p-20"
         >
           <div className="absolute -right-32 -top-32 h-[400px] w-[400px] animate-pulse-soft rounded-full bg-brand-pink/30 blur-3xl" />
           <div className="absolute -bottom-32 -left-32 h-[400px] w-[400px] animate-pulse-soft rounded-full bg-brand-blue/35 blur-3xl [animation-delay:1.2s]" />
@@ -521,7 +528,7 @@ export default function Home() {
               </Link>
             </div>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <Footer />

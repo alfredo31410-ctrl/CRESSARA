@@ -1,5 +1,5 @@
 /** Navegación principal para escritorio y dispositivos móviles. */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import BrandLogo from "@/components/layout/BrandLogo";
@@ -13,17 +13,37 @@ const links = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 24);
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <header
       data-testid="main-navbar"
-      className="fixed inset-x-0 top-0 z-50 glass"
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-500 ${
+        scrolled
+          ? "border-white/10 bg-[#5B274B]/90 shadow-[0_12px_35px_-24px_rgba(50,20,38,0.85)] backdrop-blur-xl"
+          : "border-transparent bg-[#5B274B]/40 backdrop-blur-md"
+      }`}
     >
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 md:px-12">
+      <div
+        className={`mx-auto flex max-w-7xl items-center justify-between px-6 transition-all duration-500 md:px-12 ${
+          scrolled ? "h-16" : "h-20"
+        }`}
+      >
         <Link
           to="/"
           data-testid="navbar-logo"
-          className="flex items-center"
+          className={`flex origin-left items-center transition-transform duration-500 ${
+            scrolled ? "scale-90" : "scale-100"
+          }`}
           aria-label="Cressara inicio"
           onClick={() => setOpen(false)}
         >

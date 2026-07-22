@@ -63,12 +63,7 @@
         rgba(161, 82, 186, 0.14) 0%,
         transparent 32%
       ),
-      linear-gradient(
-        135deg,
-        #ffd1ec 0%,
-        #fff7fc 52%,
-        #ffb9ad 100%
-      );
+      linear-gradient(135deg, #ffd1ec 0%, #fff7fc 52%, #ffb9ad 100%);
     color: #4a263a;
     font-family: "DM Sans", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -113,16 +108,8 @@
 
   .grid-noise {
     background-image:
-      linear-gradient(
-        to right,
-        rgba(161, 82, 186, 0.09) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        to bottom,
-        rgba(255, 122, 172, 0.09) 1px,
-        transparent 1px
-      );
+      linear-gradient(to right, rgba(161, 82, 186, 0.09) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 122, 172, 0.09) 1px, transparent 1px);
     background-size: 64px 64px;
   }
 
@@ -138,5 +125,57 @@
 @layer base {
   [data-debug-wrapper="true"] {
     display: contents !important;
+  }
+}
+
+/* Entrada editorial al aparecer dentro del viewport. */
+.reveal {
+  opacity: 0;
+  filter: blur(8px);
+  transform: translate3d(0, var(--reveal-distance, 28px), 0);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform, filter;
+}
+
+.reveal-visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0);
+}
+
+/* Evita movimientos innecesarios cuando el usuario los ha desactivado. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-visible {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+  .hero-background {
+    animation: none;
+    transform: none;
+  }
+}
+
+/* Movimiento ambiental lento de la imagen principal del inicio. */
+.hero-background {
+  animation: hero-background-scale 14s cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+@keyframes hero-background-scale {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.045);
   }
 }

@@ -14,6 +14,7 @@ import {
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SocialLinks from "@/components/content/SocialLinks";
+import Reveal from "@/components/motion/Reveal";
 
 const HOTMART_URL =
   "https://pay.hotmart.com/W106231401S?off=lc9k824d&checkoutMode=10&bid=1783099219778";
@@ -114,7 +115,7 @@ export default function Comunidad() {
         className="scroll-mt-24 bg-gradient-to-br from-[#5B274B] via-[#8E477B] to-[#D95091] px-6 pb-20 pt-36 md:px-12 md:pb-28 md:pt-44"
       >
         <div className="mx-auto grid max-w-7xl items-center gap-14 md:grid-cols-12">
-          <div className="md:col-span-7">
+          <Reveal className="md:col-span-7" distance={32}>
             <p className="mb-6 font-mono text-xs uppercase tracking-[0.24em] text-brand-lavender">
               Membresía mensual · Cressara Club
             </p>
@@ -154,9 +155,13 @@ export default function Comunidad() {
                 Ver qué incluye
               </a>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="animate-fade-up rounded-3xl border border-white/20 bg-white/10 p-7 shadow-[0_22px_60px_-42px_rgba(255,122,172,0.75)] backdrop-blur-sm transition-transform duration-700 hover:-translate-y-1 md:col-span-5 md:p-9 [animation-delay:160ms]">
+          <Reveal
+            delay={180}
+            distance={38}
+            className="rounded-3xl border border-white/20 bg-white/10 p-7 shadow-[0_22px_60px_-42px_rgba(255,122,172,0.75)] backdrop-blur-sm transition-all duration-700 hover:-translate-y-1 hover:border-white/35 hover:bg-white/15 md:col-span-5 md:p-9"
+          >
             <p className="font-mono text-xs uppercase tracking-[0.2em] text-brand-lavender">
               Acompañamiento mensual
             </p>
@@ -193,13 +198,13 @@ export default function Comunidad() {
                 Comunidad y acompañamiento emocional.
               </p>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* VALIDACIÓN EMOCIONAL */}
       <section className="mx-auto max-w-7xl px-6 pt-20 md:px-12 md:pt-28">
-        <div className="relative animate-fade-up overflow-hidden rounded-3xl border border-brand-pink/30 bg-white/80 px-7 py-10 shadow-[0_18px_40px_-32px_rgba(161,82,186,0.55)] md:px-12 md:py-14">
+        <Reveal className="relative overflow-hidden rounded-3xl border border-brand-pink/30 bg-white/80 px-7 py-10 shadow-[0_18px_40px_-32px_rgba(161,82,186,0.55)] transition-all duration-700 hover:border-brand-pink/50 hover:bg-white/90 md:px-12 md:py-14">
           <div className="absolute -right-20 -top-20 h-56 w-56 animate-pulse-soft rounded-full bg-brand-pink/20 blur-3xl" />
 
           <div className="relative max-w-4xl">
@@ -217,7 +222,7 @@ export default function Comunidad() {
               comprenderte con calma y volver a escucharte.
             </p>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* PARA QUIÉN ES */}
@@ -240,17 +245,18 @@ export default function Comunidad() {
                 "Quieres recuperar claridad y voz propia.",
                 "Necesitas un espacio para escucharte de verdad.",
               ].map((item, index) => (
-                <div
+                <Reveal
                   key={item}
-                  className="animate-fade-up rounded-2xl border border-brand-pink/25 bg-white/80 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-brand-pink/55"
-                  style={{ animationDelay: `${index * 80}ms` }}
+                  delay={index * 80}
+                  distance={28}
+                  className="rounded-2xl border border-brand-pink/25 bg-white/80 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-brand-pink/55"
                 >
                   <CheckCircle2 size={20} className="text-brand-pink" />
 
                   <p className="mt-4 text-base leading-relaxed text-brand-text">
                     {item}
                   </p>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
